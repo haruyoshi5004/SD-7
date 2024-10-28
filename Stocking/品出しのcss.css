@@ -34,7 +34,18 @@ body {
     background-color: #1465bd;
 }
 
-
+.registration-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #b3e5fc; /* 水色 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
 .syouhin{
     background-color:#f5f5f5;
     margin:20px;
