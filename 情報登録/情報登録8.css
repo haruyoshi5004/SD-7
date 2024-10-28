@@ -1,4 +1,4 @@
-<<<<<<< HEAD:æƒ…å ±ç™»éŒ²/æƒ…å ±ç™»éŒ²8.css
+
 * {
     box-sizing: border-box;
 }
@@ -13,9 +13,8 @@ body {
     background-color: #f5f5f5;
 }
 
-/* ƒwƒbƒ_[‚ÌƒXƒ^ƒCƒ‹ */
 .header {
-    background-color: #b3e5fc; /* …F */
+    background-color: #b3e5fc;
     color: #000;
     padding: 20px;
     text-align: center;
@@ -25,10 +24,10 @@ body {
     top: 0;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* ‘¼‚Ì—v‘f‚æ‚è‘O–Ê‚É•\Ž¦ */
+    z-index: 1000;
 }
 
-/* ƒtƒH[ƒ€‚ÌƒXƒ^ƒCƒ‹ */
+/* ï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½ÌƒXï¿½^ï¿½Cï¿½ï¿½ */
 .login-container {
     padding: 20px;
     width: 400px;
@@ -48,10 +47,10 @@ label {
     margin-top: 5px;
     border: 2px solid #00274a;
     border-radius: 5px;
-    background-color: #b3e5fc; /* …F */
+    background-color: #b3e5fc; 
 }
 
-/* ƒ{ƒ^ƒ“‚ÌƒXƒ^ƒCƒ‹ */
+
 .button-container {
     display: flex;
     justify-content: space-between;
@@ -63,7 +62,7 @@ label {
     bottom: 20px;
     left: 20px;
     padding: 10px 20px;
-    background-color: #b3e5fc; /* …F */
+    background-color: #b3e5fc;
     color: rgb(0, 0, 0);
     border: none;
     border-radius: 5px;
@@ -73,7 +72,7 @@ label {
 
 .choose-button {
     padding: 10px;
-    background-color: #b3e5fc; /* …F */
+    background-color: #b3e5fc; 
     color: #000;
     border: 2px solid #00274a;
     border-radius: 5px;
@@ -86,9 +85,8 @@ label {
 }
 
 button:hover {
-    background-color: #6692a7; /* ƒ{ƒ^ƒ“‚Ìƒzƒo[Žž‚ÌF•ÏX */
+    background-color: #6692a7; 
 }
-=======
 * {
     box-sizing: border-box;
 }
@@ -178,4 +176,3 @@ label {
 button:hover {
     background-color: #6692a7; /* ãƒœã‚¿ãƒ³ã®ãƒ›ãƒãƒ¼æ™‚ã®è‰²å¤‰æ›´ */
 }
->>>>>>> 68667af43fa21b69ceb4905cc429c8cbd9bd88b5:æƒ…å ±ç™»éŒ²8.css
