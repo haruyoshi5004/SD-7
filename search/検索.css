@@ -82,15 +82,15 @@ label {
     font-size: 16px;
 }
 .search-button2 {
-    position: fixed;
-    padding: 10px 20px;
-    background-color: #b3e5fc; /* 水色 */
-    color: rgb(0, 0, 0);
-    border: none;
+    width: 50%;
+    padding: 10px;
+    margin: 10px auto 0 auto; /* 上下の中央揃え */
+    border: 2px solid #00274a;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+    background-color: #b3e5fc; /* 水色 */
+    display: block; /* ブロック表示にすることで中央揃えが効く */
 }
+
 
 button:hover {
     background-color: #6692a7; 
@@ -116,4 +116,9 @@ button:hover {
     right: 10px;
     top: 50%; 
     transform: translateY(-50%); 
+}
+
+a {
+    text-decoration: none;
+    color: inherit; /* ボタン内のリンクの色もボタンに合わせる */
 }
