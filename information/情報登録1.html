@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
     <link rel="stylesheet" href="情報登録1.css">
+    <script>
+        function validateAndLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // ユーザー名とパスワードが入力されているか確認
+            if (username && password) {
+                // 入力があれば次の画面に遷移
+                window.location.href = "情報登録2.html";
+            } 
+            else {
+                alert("ユーザー名とパスワードを入力してください。");
+            }
+        }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -22,6 +37,6 @@
 
     <!-- ボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
-    <a href="情報登録2.html"><button class="login-button">ログイン</button></a>
+    <button class="login-button" onclick="validateAndLogin()">ログイン</button>
 </body>
 </html>
