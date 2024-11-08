@@ -18,13 +18,13 @@ if (isset($_POST["user"], $_POST["pass"])) {
     // パスワードが一致するか確認
     if ($result && $result['パスワード'] === $password) {
         // ログイン成功
-        header("Location: information2.html");
+        header("Location: ../information/information2.html");
         exit();  // headerの後にexitを追加して、リダイレクト後のコードが実行されないようにする
     } else {
         // ログイン失敗
         echo "<script type='text/javascript'>
             alert('ユーザー名またはパスワードが間違っています。');
-            window.location.href = '情報登録1.html';
+            window.location.href = '../information/情報登録1.html';
         </script>";
         exit();
     }
