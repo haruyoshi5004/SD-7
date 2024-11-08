@@ -1,4 +1,5 @@
 <?php
+if(isset($_POST['user'],$_POST['pass'])){
 a = $_POST["user"];
 $arr = array($_POST["pass"]);
 $dsn = "mysql:dbname=sinadasi;host=localhost";
@@ -11,5 +12,6 @@ if($st == a){
     $alert = "<script type='text/javascript'>alert('これはalertです。');</script>";
     echo $alert;
     header('Location:information1.php');
+}
 }
 ?>
