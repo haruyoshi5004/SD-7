@@ -5,21 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
     <link rel="stylesheet" href="情報登録1.css">
-    <script>
-        function validateAndLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            // ユーザー名とパスワードが入力されているか確認
-            if (username && password) {
-                // 入力があれば次の画面に遷移
-                window.location.href = "情報登録2.html";
-            } 
-            else {
-                alert("ユーザー名とパスワードを入力してください。");
-            }
-        }
-    </script>
 </head>
 <body>
     <header class="header">
@@ -28,15 +13,17 @@
 
     <div class="login-container">
         <h2>ログインフォーム</h2>
-        <label name = "user" for="username">ユーザー名</label>
-        <input name ="pass" type="text" id="username" class="input-field">
-        
-        <label for="password">パスワード</label>
-        <input type="password" id="password" class="input-field">
+        <form name ="method" action = "../php/information1.php">
+            <label name = "user" for="username">ユーザー名</label>
+            <input name ="pass" type="text" id="username" class="input-field">
+            
+            <label for="password">パスワード</label>
+            <input type="password" id="password" class="input-field">
+            <input type = "submit" value = "ログイン">
+        </form>
     </div>
 
     <!-- ボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
-    <button class="login-button" onclick="validateAndLogin()">ログイン</button>
 </body>
 </html>
