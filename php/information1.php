@@ -1,12 +1,15 @@
 <?php
-$arr = array($_POST["user"],$_POST["pass"]);
+a = $_POST["user"];
+$arr = array($_POST["pass"]);
 $dsn = "mysql:dbname=sinadasi;host=localhost";
 $my = new PDO($dsn, "sina", "sina");
-$sql = "SELECT * FROM ログイン管理;";
-$st = $my -> prepare($sql);
-if($st->execute($arr) == false)
-    echo("データの追加に失敗しました");
-else
-    echo("データを追加しました");
-    header('Location:kirok.html');
+$sql = "SELECT パスワード WHERE ユーザー名 = a FROM ログイン管理;";
+$st = $my -> query($sql);
+if($st == a){
+    header("Location:information2.html");
+}else{
+    $alert = "<script type='text/javascript'>alert('これはalertです。');</script>";
+    echo $alert;
+    header('Location:information1.php');
+}
 ?>
