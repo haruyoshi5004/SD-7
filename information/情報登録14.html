@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>従業員設定</title>
+    </head>
+    <body>
+        <h1>従業員設定</h1>
+        <form method ="POST" action="../information14.php">
+            <label for ="username">名前</label>
+            <input type = "text" name = "name">
+            <label for = "kengen">権限設定</label>
+            <SELECT name = "kengen">
+                <option value="all">all操作可</option>
+                <option value="part">一部操作可</option>
+                <option value="none">権限無し</option>
+            </SELECT>
+            <label for ="user">ユーザーネーム</label>
+            <input type = "text" name="user">
+            <input type ="submit" value="登録">
+        </form>
+    </body>
+</html>
