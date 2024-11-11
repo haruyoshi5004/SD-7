@@ -21,7 +21,7 @@ if (isset($_POST["name"], $_POST["kengen"], $_POST["user"])) {
             $admin_id = $result['管理者id'];
 
             // SQL文（ユーザー情報の挿入）
-            $sql = "INSERT INTO ユーザー (管理者id, 名前, 管理者権限) VALUES (:id, :name, :ken)";
+            $sql = "INSERT INTO ユーザー名(管理者id, 名前, 管理者権限) VALUES (:id, :name, :ken)";
             // SQL準備
             $st = $my->prepare($sql);
             $params = array(':id' => $admin_id, ':name' => $a, ':ken' => $ken);
