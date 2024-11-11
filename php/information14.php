@@ -1,12 +1,13 @@
 <?php
-if (isset($_POST["name"], $_POST["kengen"],$_POST["user"])) {
+if (isset($_POST["name"], $_POST["kengen"], $_POST["user"])) {
     $a = $_POST["name"];  // ユーザー名
-    $ken = $_POST["kengen"];  // パスワード
-    $user = $_POST["user"];
+    $ken = $_POST["kengen"];  // 管理者権限
+    $user = $_POST["user"];  // ここでは使っていない変数（後で使用しないなら削除可能）
+
     $dsn = "mysql:dbname=shinadasi;host=localhost";
-    try{
+    try {
         $my = new PDO($dsn, "sina", "sina");
-        // SQL文（パスワードを取得）
+        // SQL文（管理者idを取得）
         $sql = "SELECT 管理者id FROM ログイン管理 WHERE ユーザー名 = :user";
         // SQL準備
         $st = $my->prepare($sql);
@@ -15,17 +16,23 @@ if (isset($_POST["name"], $_POST["kengen"],$_POST["user"])) {
         // 結果を取得
         $result = $st->fetch(PDO::FETCH_ASSOC);
 
-        // SQL文（パスワードを取得）
-        $sql = "INSERT INTO ユーザー名(管理者id,名前,管理者権限) VALUES (:id,:user,:ken)";
-        
-        // SQL準備
-        $st = $my->prepare($sql);
-        $params = array(':id' => $result, ':user' => $name,":ken" => $ken);
+        if ($result) {
+            // 管理者idを取り出す
+            $admin_id = $result['管理者id'];
 
-        if ($st->execute($params)) {
-            echo "挿入に成功しました！";
+            // SQL文（ユーザー情報の挿入）
+            $sql = "INSERT INTO ユーザー (管理者id, 名前, 管理者権限) VALUES (:id, :name, :ken)";
+            // SQL準備
+            $st = $my->prepare($sql);
+            $params = array(':id' => $admin_id, ':name' => $a, ':ken' => $ken);
+
+            if ($st->execute($params)) {
+                echo "挿入に成功しました！";
+            } else {
+                echo "挿入に失敗しました！";
+            }
         } else {
-            echo "挿入に失敗しました！";
+            echo "指定されたユーザー名は存在しません。";
         }
 
     } catch (PDOException $e) {
