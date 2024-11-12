@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-11-06 18:46:38
+-- 生成日時: 2024-11-12 16:35:09
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- データベース: `sinadasi`
+-- データベース: `shinadasi`
 --
 
 -- --------------------------------------------------------
@@ -96,12 +96,7 @@ CREATE TABLE `商品詳細` (
   `商品ID` int(11) NOT NULL,
   `棚ID` int(11) NOT NULL,
   `商品カテゴリーID` int(11) NOT NULL,
-  `商品名` varchar(100) NOT NULL,
-  `商品カテゴリー` varchar(100) NOT NULL,
-  `棚名` varchar(100) NOT NULL,
-  `相対パス` text DEFAULT NULL,
-  `在庫数` int(11) NOT NULL,
-  `JANコード` int(13) NOT NULL
+  `在庫数` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -156,6 +151,7 @@ CREATE TABLE `棚` (
 --
 ALTER TABLE `マッピング`
   ADD PRIMARY KEY (`マッピングID`),
+  ADD UNIQUE KEY `マッピングID` (`マッピングID`),
   ADD KEY `商品ID` (`商品ID`),
   ADD KEY `棚ID` (`棚ID`);
 
@@ -164,25 +160,29 @@ ALTER TABLE `マッピング`
 --
 ALTER TABLE `ユーザー名`
   ADD PRIMARY KEY (`管理ID`),
+  ADD UNIQUE KEY `管理者ID_2` (`管理者ID`),
   ADD KEY `管理者ID` (`管理者ID`);
 
 --
 -- テーブルのインデックス `ログイン管理`
 --
 ALTER TABLE `ログイン管理`
-  ADD PRIMARY KEY (`管理者ID`);
+  ADD PRIMARY KEY (`管理者ID`),
+  ADD UNIQUE KEY `ユーザー名` (`ユーザー名`);
 
 --
 -- テーブルのインデックス `商品`
 --
 ALTER TABLE `商品`
-  ADD PRIMARY KEY (`商品ID`);
+  ADD PRIMARY KEY (`商品ID`),
+  ADD UNIQUE KEY `商品名` (`商品名`);
 
 --
 -- テーブルのインデックス `商品カテゴリー`
 --
 ALTER TABLE `商品カテゴリー`
-  ADD PRIMARY KEY (`商品カテゴリーID`);
+  ADD PRIMARY KEY (`商品カテゴリーID`),
+  ADD UNIQUE KEY `商品カテゴリー名` (`商品カテゴリー名`);
 
 --
 -- テーブルのインデックス `商品詳細`
