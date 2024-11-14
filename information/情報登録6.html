@@ -3,22 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>情報登録-商品配置登録</title>
+    <title>品出し - ヘッダー</title>
     <link rel="stylesheet" href="情報登録.css">
 </head>
 <body>
     <header class="header">
-        商品配置登録
+        品出し
     </header>
 
     <p>商品の配置場所をクリックしてください​</p>
 
-    <div class="image-container">
-            <a href="情報登録7.html"><img src="map.png" alt="説明文"></a>
-    </div>
-    </body>
-    </html>
-    
+    <canvas id="mapCanvas" width="800" height="600"></canvas>
+
+    <!-- 棚配置表示用のスクリプトを読み込む -->
+    <script>
+        // canvas要素と2D描画コンテキスト
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // ローカルストレージから棚の位置を読み込む関数
+        function loadShelfPositions() {
+            const savedPositions = localStorage.getItem('shelfPositions');
+            if (savedPositions) {
+                return JSON.parse(savedPositions); // 保存された棚の位置を返す
+            }
+            return [];
+        }
+
+        // 棚を描画する関数
+        function drawShelves(shelves) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            shelves.forEach(shelf => {
+                ctx.fillStyle = "#5f9"; // 棚の色（緑色）
+                ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                ctx.strokeRect(shelf.x, shelf.y, shelf.width, shelf.height);
+            });
+        }
+
+        // 棚がクリックされた時の処理（クリックした棚ごとに異なるページに移動）
+        function handleShelfClick(x, y, shelves) {
+            const clickedShelf = shelves.find(shelf => 
+                x >= shelf.x && x <= shelf.x + shelf.width &&
+                y >= shelf.y && y <= shelf.y + shelf.height
+            );
+            
+            if (clickedShelf) {
+                // 棚ごとに異なるHTMLに移動させたい場合の処理
+                const shelfId = clickedShelf.id; // 棚にidがあると仮定
+                if (shelfId === 1) {
+                    window.location.href = '情報登録8.html'; // 棚1をクリックしたとき
+                } else if (shelfId === 2) {
+                    window.location.href = '情報登録8.html'; // 棚2をクリックしたとき
+                } else if (shelfId === 3) {
+                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
+                }
+            }
+        }
+
+        // ページが読み込まれたら棚の位置を描画
+        window.onload = function() {
+            const shelves = loadShelfPositions(); // 保存された棚の位置を取得
+            drawShelves(shelves);                 // 取得した棚の位置で描画
+
+            // canvasにクリックイベントを追加
+            canvas.addEventListener('click', function(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // クリックした座標に対応する棚を探して処理
+                handleShelfClick(x, y, shelves);
+            });
+        };
+    </script>
+
     <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>

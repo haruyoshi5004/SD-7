@@ -27,7 +27,7 @@ if (isset($_POST["name"], $_POST["kengen"], $_POST["user"])) {
             $params = array(':id' => $admin_id, ':name' => $a, ':ken' => $ken);
 
             if ($st->execute($params)) {
-                header("Location:../information/情報登録1.html");
+                header("Location:../information/情報登録4.html");
             } else {
                 echo "挿入に失敗しました！";
             }

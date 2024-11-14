@@ -20,6 +20,7 @@ if (isset($_POST["user"], $_POST["pass"])) {
         $params = array(':user' => $a, ':pass' => $hashedPassword);
 
         if ($st->execute($params)) {
+            header("Location:../information/情報登録14.html");
             echo "挿入に成功しました！";
         } else {
             echo "挿入に失敗しました！";

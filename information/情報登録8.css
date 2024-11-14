@@ -67,6 +67,19 @@ label {
     font-size: 16px;
 }
 
+.search-button {
+    position: fixed;
+    bottom: 20px;
+    right: 0; /* 左端に寄せる */
+    padding: 10px 20px;
+    background-color: #b3e5fc;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
 .choose-button {
     padding: 10px;
     background-color: #b3e5fc;
