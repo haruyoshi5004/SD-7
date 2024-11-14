@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メニュー</title>
+    <title>情報登録-従業員登録</title>
     <link rel="stylesheet" href="情報登録3.css">
 </head>
 <body>
     <header class="header">
-        メニュー
+        従業員新規登録
     </header>
 
     <div class="login-container">
-        <form name="POST" action="../php/information3.php">
+        <!-- CSRF対策トークン追加 -->
+        <form method="POST" action="../php/information3.php">
+            <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
+
             <label for="username">ユーザー名</label>
-            <input type="text" id="username" class="input-field" name ="user">
+            <input type="text" id="username" class="input-field" name="user" required>
             
             <label for="password">パスワード</label>
-            <input type="password" id="password" class="input-field" name = "pass">
-            <input type ="submit" value = "登録">
+            <input type="password" id="password" class="input-field" name="pass" required>
+
+            <!-- 送信ボタンをボタンタグに変更 -->
+            <button type="submit">登録</button>
         </form>
     </div>
 
-    <!-- ボタン -->
+    <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
 </html>
