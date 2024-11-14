@@ -10,26 +10,26 @@ let initialShelves = [
     { id: 4, x: 400, y: 100, width: 100, height: 50, selected: false },
     { id: 5, x: 500, y: 100, width: 100, height: 50, selected: false },
     { id: 6, x: 600, y: 100, width: 100, height: 50, selected: false },
-//左側棚
+    // 左側棚
     { id: 10, x: 50, y: 150, width: 50, height: 100, selected: false },
     { id: 11, x: 50, y: 250, width: 50, height: 100, selected: false },
     { id: 12, x: 50, y: 350, width: 50, height: 100, selected: false },
-//左1側棚
+    // 左1側棚
     { id: 15, x: 175, y: 250, width: 50, height: 100, selected: false },
     { id: 16, x: 175, y: 350, width: 50, height: 100, selected: false },
-//左2
+    // 左2
     { id: 20, x: 275, y: 250, width: 50, height: 100, selected: false },
     { id: 21, x: 275, y: 350, width: 50, height: 100, selected: false },
-//中央
+    // 中央
     { id: 25, x: 375, y: 250, width: 50, height: 100, selected: false },
     { id: 26, x: 375, y: 350, width: 50, height: 100, selected: false },
-//右2
+    // 右2
     { id: 30, x: 475, y: 250, width: 50, height: 100, selected: false },
     { id: 31, x: 475, y: 350, width: 50, height: 100, selected: false },
-//右1
+    // 右1
     { id: 35, x: 575, y: 250, width: 50, height: 100, selected: false },
     { id: 36, x: 575, y: 350, width: 50, height: 100, selected: false },
-//右側棚
+    // 右側棚
     { id: 40, x: 700, y: 150, width: 50, height: 100, selected: false },
     { id: 41, x: 700, y: 250, width: 50, height: 100, selected: false },
     { id: 42, x: 700, y: 350, width: 50, height: 100, selected: false },
@@ -54,6 +54,7 @@ function saveShelfPositions() {
 // 棚位置をリセットする関数
 function resetShelfPositions() {
     shelves = [...initialShelves]; // 初期位置に戻す
+    localStorage.removeItem('shelfPositions'); // ローカルストレージをリセット
     drawShelves(); // 再描画
 }
 
