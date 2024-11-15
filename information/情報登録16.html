@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>従業員設定</title>
+    <link rel="stylesheet" href="情報登録14.css">
+</head>
+<body>
+    <header class="header">
+        従業員設定
+    </header>
+    
+    <div class="login-container">
+        <form method="POST" action="../php/information16.php">
+            <label for="name">名前</label>
+            <input type="text" id="name" name="name" class="input-field"> 
+            <label for="password">パスワード</label>
+            <input type="password" name="pass" id ="pass" class="input-field">
+            <label for="kengen">権限設定</label>
+            <select id="kengen" name="kengen" class="input-field">
+                <option value="all">全操作可</option>
+                <option value="part">一部操作可</option>
+                <option value="none">権限無し</option>
+            </select>
+            <input type="hidden" name="user" value="<?php echo htmlspecialchars($_POST['user']); ?>">
+            <div class="button-container">
+                <input type="submit" value="登録" class="choose-button">
+            </div>
+        </form>
+    </div>
+    
+    <a href="情報登録2.html">
+        <button class="back-button">戻る</button>
+    </a>
+    
+</body>
+</html>
