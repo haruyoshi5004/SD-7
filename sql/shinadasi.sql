@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-11-12 16:35:09
+-- 生成日時: 2024-11-15 05:45:24
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -69,10 +69,18 @@ CREATE TABLE `ログイン管理` (
 CREATE TABLE `商品` (
   `商品ID` int(11) NOT NULL,
   `商品名` varchar(100) NOT NULL,
-  `JANコード` int(13) NOT NULL,
+  `JANコード` bigint(13) NOT NULL,
   `価格` int(11) NOT NULL,
   `商品説明` varchar(1500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `商品`
+--
+
+INSERT INTO `商品` (`商品ID`, `商品名`, `JANコード`, `価格`, `商品説明`) VALUES
+(2, '卵', 1029382042223, 590, 'ああああああああ'),
+(4, '生卵', 1029382042224, 330, 'qqqqqqq');
 
 -- --------------------------------------------------------
 
@@ -85,6 +93,14 @@ CREATE TABLE `商品カテゴリー` (
   `商品カテゴリー名` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- テーブルのデータのダンプ `商品カテゴリー`
+--
+
+INSERT INTO `商品カテゴリー` (`商品カテゴリーID`, `商品カテゴリー名`) VALUES
+(1, 'おかし'),
+(2, '麺類');
+
 -- --------------------------------------------------------
 
 --
@@ -96,6 +112,7 @@ CREATE TABLE `商品詳細` (
   `商品ID` int(11) NOT NULL,
   `棚ID` int(11) NOT NULL,
   `商品カテゴリーID` int(11) NOT NULL,
+  `相対パス` text DEFAULT NULL,
   `在庫数` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -108,10 +125,7 @@ CREATE TABLE `商品詳細` (
 CREATE TABLE `基準値` (
   `基準値ID` int(11) NOT NULL,
   `棚ID` int(11) NOT NULL,
-  `商品名` varchar(100) NOT NULL,
-  `棚名` varchar(100) NOT NULL,
-  `JANコード` int(13) NOT NULL,
-  `実績` text NOT NULL,
+  `基準` text NOT NULL,
   `時間` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -143,6 +157,14 @@ CREATE TABLE `棚` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- テーブルのデータのダンプ `棚`
+--
+
+INSERT INTO `棚` (`棚ID`, `棚名`, `相対パス`) VALUES
+(1, '柑橘類', 'いいいいい'),
+(2, 'モリンガ', 'ｂｂｂｂ');
+
+--
 -- ダンプしたテーブルのインデックス
 --
 
@@ -151,7 +173,6 @@ CREATE TABLE `棚` (
 --
 ALTER TABLE `マッピング`
   ADD PRIMARY KEY (`マッピングID`),
-  ADD UNIQUE KEY `マッピングID` (`マッピングID`),
   ADD KEY `商品ID` (`商品ID`),
   ADD KEY `棚ID` (`棚ID`);
 
@@ -175,7 +196,8 @@ ALTER TABLE `ログイン管理`
 --
 ALTER TABLE `商品`
   ADD PRIMARY KEY (`商品ID`),
-  ADD UNIQUE KEY `商品名` (`商品名`);
+  ADD UNIQUE KEY `商品名` (`商品名`),
+  ADD UNIQUE KEY `JANコード` (`JANコード`);
 
 --
 -- テーブルのインデックス `商品カテゴリー`
@@ -189,6 +211,7 @@ ALTER TABLE `商品カテゴリー`
 --
 ALTER TABLE `商品詳細`
   ADD PRIMARY KEY (`商品詳細ID`),
+  ADD UNIQUE KEY `uni1` (`商品ID`,`棚ID`,`商品カテゴリーID`),
   ADD KEY `商品ID` (`商品ID`),
   ADD KEY `商品カテゴリーID` (`商品カテゴリーID`),
   ADD KEY `棚ID` (`棚ID`);
@@ -198,6 +221,7 @@ ALTER TABLE `商品詳細`
 --
 ALTER TABLE `基準値`
   ADD PRIMARY KEY (`基準値ID`),
+  ADD UNIQUE KEY `棚ID_2` (`棚ID`),
   ADD KEY `棚ID` (`棚ID`);
 
 --
@@ -205,6 +229,7 @@ ALTER TABLE `基準値`
 --
 ALTER TABLE `履歴`
   ADD PRIMARY KEY (`履歴ID`),
+  ADD UNIQUE KEY `履歴ID` (`履歴ID`),
   ADD KEY `商品ID` (`商品ID`),
   ADD KEY `棚ID` (`棚ID`);
 
@@ -212,7 +237,8 @@ ALTER TABLE `履歴`
 -- テーブルのインデックス `棚`
 --
 ALTER TABLE `棚`
-  ADD PRIMARY KEY (`棚ID`);
+  ADD PRIMARY KEY (`棚ID`),
+  ADD UNIQUE KEY `棚名` (`棚名`);
 
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
@@ -240,19 +266,19 @@ ALTER TABLE `ログイン管理`
 -- テーブルの AUTO_INCREMENT `商品`
 --
 ALTER TABLE `商品`
-  MODIFY `商品ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `商品ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- テーブルの AUTO_INCREMENT `商品カテゴリー`
 --
 ALTER TABLE `商品カテゴリー`
-  MODIFY `商品カテゴリーID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `商品カテゴリーID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- テーブルの AUTO_INCREMENT `商品詳細`
 --
 ALTER TABLE `商品詳細`
-  MODIFY `商品詳細ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `商品詳細ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- テーブルの AUTO_INCREMENT `基準値`
@@ -270,7 +296,7 @@ ALTER TABLE `履歴`
 -- テーブルの AUTO_INCREMENT `棚`
 --
 ALTER TABLE `棚`
-  MODIFY `棚ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `棚ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- ダンプしたテーブルの制約
