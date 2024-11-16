@@ -26,10 +26,15 @@ body {
     z-index: 1000;
 }
 
-
 .login-container {
     padding: 20px;
     width: 400px;
+    text-align: center; /* コンテンツを中央揃え */
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 22px;
 }
 
 label {
@@ -37,6 +42,7 @@ label {
     margin-top: 10px;
     font-size: 16px;
     color: #333;
+    text-align: left; /* ラベルは左揃え */
 }
 
 .input-field {
@@ -54,19 +60,23 @@ label {
     right: 20px;
 }
 
-.choose-button {
+input[type="submit"] {
+    position: fixed; /* ボタンを固定位置に */
+    bottom: 20px; /* 下からの距離 */
+    right: 20px; /* 右からの距離 */
     padding: 10px 20px;
     background-color: #b3e5fc;
     color: #000000;
-    border: 2px solid hwb(208 92% 2%);
+    border: 2px solid #c6e0f7;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
 }
 
-button:hover, .choose-button:hover {
+input[type="submit"]:hover {
     background-color: #6692a7;
 }
+
 
 .back-button {
     position: fixed;

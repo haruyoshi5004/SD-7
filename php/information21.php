@@ -19,7 +19,7 @@ if (isset($_POST["user"], $_POST["pass"])) {
     // パスワードが一致するか確認
     if ($result && password_verify($password, $result['パスワード'])) {
         // ログイン成功
-        header("Location: ../information/情報登録16.html");
+        header("Location: ../information/情報登録18.html");
         exit();  // headerの後にexitを追加して、リダイレクト後のコードが実行されないようにする
     } else {
         // ログイン失敗
