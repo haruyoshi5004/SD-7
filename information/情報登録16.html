@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <title>従業員設定</title>
     <link rel="stylesheet" href="情報登録14.css">
+    <script> 
+        function getQueryParam(param) 
+        {
+            const params = new URLSearchParams(window.location.search); 
+            return params.get(param); 
+        } 
+        window.onload = function() 
+        { 
+            const user = getQueryParam('user'); 
+            if (user) 
+            { 
+                document.getElementById('username').value = user; 
+            } 
+        } 
+    </script>
 </head>
 <body>
     <header class="header">
@@ -12,6 +27,8 @@
     
     <div class="login-container">
         <form method="POST" action="../php/information16.php">
+            <label for="username">ユーザーネーム</label>
+            <input type="hidden" id="username" name="user"><br>
             <label for="name">名前</label>
             <input type="text" id="name" name="name" class="input-field"> 
             <label for="password">パスワード</label>
