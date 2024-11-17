@@ -57,8 +57,8 @@ label {
 .choose-button {
     padding: 10px 20px;
     background-color: #b3e5fc;
-    color: #000;
-    border: 2px solid #00274a;
+    color: #000000;
+    border: 2px solid hwb(208 92% 2%);
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;

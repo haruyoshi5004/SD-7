@@ -93,3 +93,21 @@ label {
 button:hover {
     background-color: #6692a7; /* ボタンのホバー時の色 */
 }
+
+
+input[type="submit"] {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #b3e5fc;
+    color: #000000;
+    border: 2px solid #c6e0f7;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #6692a7;
+}

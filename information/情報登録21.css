@@ -26,10 +26,15 @@ body {
     z-index: 1000;
 }
 
-/* フォームのスタイル */
 .login-container {
     padding: 20px;
     width: 400px;
+    text-align: center; /* コンテンツを中央揃え */
+}
+
+h2 {
+    margin: 10px 0;
+    font-size: 22px;
 }
 
 label {
@@ -37,6 +42,7 @@ label {
     margin-top: 10px;
     font-size: 16px;
     color: #333;
+    text-align: left; /* ラベルは左揃え */
 }
 
 .input-field {
@@ -49,10 +55,28 @@ label {
 }
 
 .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
+
+input[type="submit"] {
+    position: fixed; /* ボタンを固定位置に */
+    bottom: 20px; /* 下からの距離 */
+    right: 20px; /* 右からの距離 */
+    padding: 10px 20px;
+    background-color: #b3e5fc;
+    color: #000000;
+    border: 2px solid #c6e0f7;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #6692a7;
+}
+
 
 .back-button {
     position: fixed;
@@ -65,51 +89,4 @@ label {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-}
-
-.search-button {
-    position: fixed;
-    bottom: 20px;
-    right: 0; /* 左端に寄せる */
-    padding: 10px 20px;
-    background-color: #b3e5fc;
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.choose-button {
-    padding: 10px;
-    background-color: #b3e5fc;
-    color: #000;
-    border: 2px solid #00274a;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: block;
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
-}
-
-button:hover {
-    background-color: #6692a7;
-}
-.logout-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px; /* 右下に配置 */
-    padding: 10px 20px;
-    background-color: #b3e5fc; /* ライトブルー */
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.logout-button:hover {
-    background-color: #6692a7; /* ホバー時の色 */
 }
