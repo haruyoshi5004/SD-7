@@ -23,7 +23,7 @@ if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"]))
             $params = array();
 
             if (!empty($name)) {
-                $sql .= "名前の列名 = :name, ";  // 名前の列名を正しい列名に変更
+                $sql .= "名前 = :name, ";  // 名前の列名を正しい列名に変更
                 $params[':name'] = $name;
             }
 
