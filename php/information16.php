@@ -1,9 +1,9 @@
 <?php
-if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
+if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
     $a = $_POST["name"];  // ユーザー名
     $pass = $_POST["pass"];
     $ken = $_POST["kengen"];
-    $user = $_POST["username"];
+    $user = $_POST["user"];
 
     $dsn = "mysql:dbname=shinadasi;host=localhost";
     try {
