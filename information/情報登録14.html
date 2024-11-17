@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <title>従業員設定</title>
     <link rel="stylesheet" href="情報登録14.css">
+    <script> 
+        function getQueryParam(param) 
+        {
+            const params = new URLSearchParams(window.location.search); 
+            return params.get(param); 
+        } 
+        window.onload = function() 
+        { 
+            const user = getQueryParam('user'); 
+            if (user) 
+            { 
+                document.getElementById('username').value = user; 
+            } 
+        } 
+    </script>
 </head>
 <body>
     <header class="header">
@@ -20,11 +35,8 @@
                 <option value="all">全操作可</option>
                 <option value="part">一部操作可</option>
                 <option value="none">権限無し</option>
-            </select>
-            
-            <label for="user">ユーザーネーム</label>
-            <input type="text" id="user" name="user" class="input-field">
-            
+            </select> 
+            <input type="hidden" id="username" name="user"><br>
             <div class="button-container">
                 <input type="submit" value="登録" class="choose-button">
             </div>
