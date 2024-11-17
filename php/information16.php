@@ -1,9 +1,9 @@
 <?php
-if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
-    $a = $_POST["name"];  // ユーザー名
-    $pass = $_POST["pass"];
-    $ken = $_POST["kengen"];
-    $user = $_POST["user"];
+if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
+    $username = $_POST["username"];  // ユーザー名
+    $name = $_POST["name"];
+    $password = $_POST["pass"];
+    $kengen = $_POST["kengen"];
 
     $dsn = "mysql:dbname=shinadasi;host=localhost";
     try {
@@ -13,23 +13,23 @@ if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
         // SQL文（管理者idを取得）
         $sql = "SELECT 管理者id FROM ログイン管理 WHERE ユーザー名 = :username";
         $st = $my->prepare($sql);
-        $st->bindParam(':username', $user, PDO::PARAM_STR);
+        $st->bindParam(':username', $username, PDO::PARAM_STR);
         $st->execute();
         $result = $st->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
             $admin_id = $result['管理者id'];
-            $sql = "UPDATE ユーザー名 SET ";
+            $sql = "UPDATE ログイン管理 SET ";
             $params = array();
 
-            if (!empty($a)) {
-                $sql .= "名前 = :name, ";
-                $params[':name'] = $a;
+            if (!empty($name)) {
+                $sql .= "名前の列名 = :name, ";  // 名前の列名を正しい列名に変更
+                $params[':name'] = $name;
             }
 
-            if (!empty($ken)) {
-                $sql .= "管理者権限 = :kengen, ";
-                $params[':kengen'] = $ken;
+            if (!empty($kengen)) {
+                $sql .= "管理者権限の列名 = :kengen, ";  // 管理者権限の列名を正しい列名に変更
+                $params[':kengen'] = $kengen;
             }
 
             // 最後のカンマとスペースを削除
@@ -41,8 +41,24 @@ if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
             $st = $my->prepare($sql);
 
             if ($st->execute($params)) {
-                header("Location: ../information/情報登録18.html");
-                exit();
+                // パスワードが入力されていた場合、別のテーブルにパスワードを更新
+                if (!empty($password)) {
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                    $sql_password = "UPDATE ユーザパスワード管理 SET パスワード = :pass WHERE 管理者id = :id";
+                    $st_password = $my->prepare($sql_password);
+                    $params_password = array(':pass' => $hashedPassword, ':id' => $admin_id);
+
+                    if ($st_password->execute($params_password)) {
+                        header("Location: ../information/情報登録4.html");
+                        exit();
+                    } else {
+                        echo "パスワードの更新に失敗しました！";
+                    }
+                } else {
+                    header("Location: ../information/情報登録4.html");
+                    exit();
+                }
             } else {
                 echo "更新に失敗しました！";
             }
