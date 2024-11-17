@@ -45,7 +45,7 @@ if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"]))
                 if (!empty($password)) {
                     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                    $sql_password = "UPDATE ユーザー管理 SET パスワード = :pass WHERE 管理者id = :id";
+                    $sql_password = "UPDATE ログイン管理 SET パスワード = :pass WHERE 管理者id = :id";
                     $st_password = $my->prepare($sql_password);
                     $params_password = array(':pass' => $hashedPassword, ':id' => $admin_id);
 
