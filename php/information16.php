@@ -50,13 +50,13 @@ if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
                     $params_password = array(':pass' => $hashedPassword, ':id' => $admin_id);
 
                     if ($st_password->execute($params_password)) {
-                        header("Location: ../information/情報登録4.html");
+                        header("Location: ../information/情報登録15.html");
                         exit();
                     } else {
                         echo "パスワードの更新に失敗しました！";
                     }
                 } else {
-                    header("Location: ../information/情報登録4.html");
+                    header("Location: ../information/情報登録15.html");
                     exit();
                 }
             } else {
