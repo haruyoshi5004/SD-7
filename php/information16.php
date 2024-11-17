@@ -19,7 +19,7 @@ if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"]))
 
         if ($result) {
             $admin_id = $result['管理者id'];
-            $sql = "UPDATE ログイン管理 SET ";
+            $sql = "UPDATE ユーザー名 SET ";
             $params = array();
 
             if (!empty($name)) {
