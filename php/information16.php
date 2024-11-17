@@ -27,13 +27,6 @@ if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
                 $params[':name'] = $a;
             }
 
-            if (!empty($pass)) {
-                // パスワードをハッシュ化して保存
-                $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
-                $sql .= "パスワード = :pass, ";
-                $params[':pass'] = $hashedPassword;
-            }
-
             if (!empty($ken)) {
                 $sql .= "管理者権限 = :kengen, ";
                 $params[':kengen'] = $ken;
