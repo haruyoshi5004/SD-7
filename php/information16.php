@@ -4,7 +4,7 @@ if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"]))
     $name = $_POST["name"];
     $password = $_POST["pass"];
     $kengen = $_POST["kengen"];
-
+    echo $name;
     $dsn = "mysql:dbname=shinadasi;host=localhost";
     try {
         $my = new PDO($dsn, "sina", "sina");
