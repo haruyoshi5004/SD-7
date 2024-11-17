@@ -48,7 +48,7 @@ if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"]))
             $st = $my->prepare($sql);
 
             if ($st->execute($params)) {
-                header("Location: ../information/情報登録4.html");
+                header("Location: ../information/情報登録18.html");
                 exit();
             } else {
                 echo "更新に失敗しました！";
