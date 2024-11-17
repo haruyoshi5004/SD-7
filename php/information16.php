@@ -1,36 +1,57 @@
 <?php
-if (isset($_POST["name"],$_POST["pass"] $_POST["kengen"], $_POST["user"])) {
+if (isset($_POST["username"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
     $a = $_POST["name"];  // ユーザー名
     $pass = $_POST["pass"];
-    $ken = $_POST["kengen"];  // 管理者権限
-    $user = $_POST["user"];  // ここでは使っていない変数（後で使用しないなら削除可能）
+    $ken = $_POST["kengen"];
+    $user = $_POST["username"];
 
     $dsn = "mysql:dbname=shinadasi;host=localhost";
     try {
         $my = new PDO($dsn, "sina", "sina");
+        $my->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         // SQL文（管理者idを取得）
-        $sql = "SELECT 管理者id FROM ログイン管理 WHERE ユーザー名 = :user";
-        // SQL準備
+        $sql = "SELECT 管理者id FROM ログイン管理 WHERE ユーザー名 = :username";
         $st = $my->prepare($sql);
-        $st->bindParam(':user', $user, PDO::PARAM_STR);
+        $st->bindParam(':username', $user, PDO::PARAM_STR);
         $st->execute();
-        // 結果を取得
         $result = $st->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            // 管理者idを取り出す
             $admin_id = $result['管理者id'];
+            $sql = "UPDATE ログイン管理 SET ";
+            $params = array();
 
-            // SQL文（ユーザー情報の挿入）
-            $sql = "INSERT INTO ユーザー名(管理者id, 名前, 管理者権限) VALUES (:id, :name, :ken)";
+            if (!empty($a)) {
+                $sql .= "名前 = :name, ";
+                $params[':name'] = $a;
+            }
+
+            if (!empty($pass)) {
+                // パスワードをハッシュ化して保存
+                $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+                $sql .= "パスワード = :pass, ";
+                $params[':pass'] = $hashedPassword;
+            }
+
+            if (!empty($ken)) {
+                $sql .= "管理者権限 = :kengen, ";
+                $params[':kengen'] = $ken;
+            }
+
+            // 最後のカンマとスペースを削除
+            $sql = rtrim($sql, ', ');
+            $sql .= " WHERE 管理者id = :id";
+            $params[':id'] = $admin_id;
+
             // SQL準備
             $st = $my->prepare($sql);
-            $params = array(':id' => $admin_id, ':name' => $a, ':ken' => $ken);
 
             if ($st->execute($params)) {
-                header("Location:../information/情報登録4.html");
+                header("Location: ../information/情報登録4.html");
+                exit();
             } else {
-                echo "挿入に失敗しました！";
+                echo "更新に失敗しました！";
             }
         } else {
             echo "指定されたユーザー名は存在しません。";
