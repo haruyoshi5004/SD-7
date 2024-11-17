@@ -28,7 +28,7 @@ if (isset($_POST["user"], $_POST["name"], $_POST["pass"], $_POST["kengen"])) {
             }
 
             if (!empty($kengen)) {
-                $sql .= "管理者権限の列名 = :kengen, ";  // 管理者権限の列名を正しい列名に変更
+                $sql .= "管理者権限 = :kengen, ";  // 管理者権限の列名を正しい列名に変更
                 $params[':kengen'] = $kengen;
             }
 
