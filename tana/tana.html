@@ -2,21 +2,25 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>棚配置インターフェース</title>
+    <link rel="stylesheet" href="../information/情報登録3.css">
     <style>
         #mapCanvas { border: 1px solid #000; }
         .shelf { width: 50px; height: 50px; background-color: #5f9; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h3>棚配置マップ</h3>
-    <canvas id="mapCanvas" width="800" height="600"></canvas>
+    <div class="login-container">
+        <h3>棚配置マップ</h3>
+        <canvas id="mapCanvas" width="800" height="600"></canvas>
 
-    <!-- 位置保存ボタン -->
-    <button id="saveButton">位置を保存</button>
+        <!-- 位置保存ボタン -->
+        <button id="saveButton">位置を保存</button>
 
-    <!-- 位置リセットボタン -->
-    <button id="resetButton">位置をリセット</button>
+        <!-- 位置リセットボタン -->
+        <button id="resetButton">位置をリセット</button>
+    </div>
 
     <!-- tana.jsのスクリプトを読み込む -->
     <script src="tana.js"></script>
