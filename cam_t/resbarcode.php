@@ -19,7 +19,7 @@
             $dsn="mysql:dbname=books;host=localhost";
             //$my = new PDO(接続情報,ユーザ名, パスワード);←要変更
             $my = new PDO($dsn, "test", "testuser01");
-            $sql = "SELECT JAN, 商品名, メーカー, 説明 FROM 商品情報 WHERE JAN=".$jn."";
+            $sql = "SELECT JAN, 商品名, メーカー, 説明 FROM 商品情報 WHERE JAN=".$search."";
             $res = $my->prepare($sql);
             $res->execute();
             $html = "<h3>検索結果</h3><br>";
@@ -38,7 +38,7 @@
             echo($html);
         }
         
-        if(!isset($_POST["code"])){
+        if(!isset($_POST["s"])){
             $html = "<h3>入力されていません</h3>";
             echo($html);
         }
