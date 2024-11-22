@@ -38,7 +38,7 @@
             echo($html);
         }
     
-        if(!isset($_POST["code"])){
+        if(!isset($_POST["s"])){
             $html = "<h3>入力されていません</h3>";
             echo($html);
         }
