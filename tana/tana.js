@@ -39,17 +39,31 @@ let shelves = [...initialShelves];
 
 // ローカルストレージから棚の位置を読み込む関数
 function loadShelfPositions() {
-    const savedPositions = localStorage.getItem('shelfPositions');
-    if (savedPositions) {
-        shelves = JSON.parse(savedPositions);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "load_shelves.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            shelves = JSON.parse(xhr.responseText);
+            drawShelves();
+        }
+    };
+    xhr.send();
 }
+
 
 // ローカルストレージに棚の位置を保存する関数
 function saveShelfPositions() {
-    localStorage.setItem('shelfPositions', JSON.stringify(shelves));
-    alert("棚の位置が保存されました！");
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "save_shelves.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            alert("棚の位置が保存されました！");
+        }
+    };
+    xhr.send(JSON.stringify(shelves));
 }
+
 
 // 棚位置をリセットする関数
 function resetShelfPositions() {
