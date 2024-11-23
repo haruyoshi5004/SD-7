@@ -4,7 +4,7 @@ if (isset($_POST["user"])) {
         $username = $_POST["user"];
         $dsn = "mysql:dbname=shinadasi;host=localhost";
         $my = new PDO($dsn, "sina", "sina");
-        $sql = "SELECT 管理者ID FROM ユーザー名 WHERE 名前 = :user";
+        $sql = "SELECT 管理者ID FROM ログイン管理 WHERE ユーザー名 = :user";
         $st = $my->prepare($sql);
         $st->bindParam(':user', $username, PDO::PARAM_STR);
         $st->execute();
