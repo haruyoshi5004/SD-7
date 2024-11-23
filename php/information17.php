@@ -19,6 +19,7 @@ if (isset($_POST["user"])) {
             $st = $my->prepare($sql);
             $st->bindParam(':admin_id', $adomin_id, PDO::PARAM_INT);
             $st->execute();
+            header("Location: ../information/情報登録19.html");
         } else {
             echo "ユーザーが見つかりません。";
         }
