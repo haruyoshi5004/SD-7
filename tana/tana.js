@@ -1,74 +1,61 @@
 // canvas要素と2D描画コンテキスト
-const canvas = document.createElement('canvas');
-canvas.id = 'mapCanvas';
-canvas.width = 800;
-canvas.height = 600;
-document.getElementById('canvasContainer').appendChild(canvas);
-
+const canvas = document.getElementById('mapCanvas');
 const ctx = canvas.getContext('2d');
 
 // 棚オブジェクトのリスト（デフォルトの位置）
 let initialShelves = [
     { id: 1, x: 100, y: 100, width: 100, height: 50, selected: false },
     { id: 2, x: 200, y: 100, width: 100, height: 50, selected: false },
-    // その他の棚...
+    { id: 3, x: 300, y: 100, width: 100, height: 50, selected: false },
+    { id: 4, x: 400, y: 100, width: 100, height: 50, selected: false },
+    { id: 5, x: 500, y: 100, width: 100, height: 50, selected: false },
+    { id: 6, x: 600, y: 100, width: 100, height: 50, selected: false },
+    // 左側棚
+    { id: 10, x: 50, y: 150, width: 50, height: 100, selected: false },
+    { id: 11, x: 50, y: 250, width: 50, height: 100, selected: false },
+    { id: 12, x: 50, y: 350, width: 50, height: 100, selected: false },
+    // 左1側棚
+    { id: 15, x: 175, y: 250, width: 50, height: 100, selected: false },
+    { id: 16, x: 175, y: 350, width: 50, height: 100, selected: false },
+    // 左2
+    { id: 20, x: 275, y: 250, width: 50, height: 100, selected: false },
+    { id: 21, x: 275, y: 350, width: 50, height: 100, selected: false },
+    // 中央
+    { id: 25, x: 375, y: 250, width: 50, height: 100, selected: false },
+    { id: 26, x: 375, y: 350, width: 50, height: 100, selected: false },
+    // 右2
+    { id: 30, x: 475, y: 250, width: 50, height: 100, selected: false },
+    { id: 31, x: 475, y: 350, width: 50, height: 100, selected: false },
+    // 右1
+    { id: 35, x: 575, y: 250, width: 50, height: 100, selected: false },
+    { id: 36, x: 575, y: 350, width: 50, height: 100, selected: false },
+    // 右側棚
+    { id: 40, x: 700, y: 150, width: 50, height: 100, selected: false },
+    { id: 41, x: 700, y: 250, width: 50, height: 100, selected: false },
+    { id: 42, x: 700, y: 350, width: 50, height: 100, selected: false },
 ];
-
 // 現在の棚の位置（デフォルト位置から変更する可能性がある）
 let shelves = [...initialShelves];
 
-// 棚の位置を読み込む関数
+// ローカルストレージから棚の位置を読み込む関数
 function loadShelfPositions() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "load_shelves.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            shelves = JSON.parse(xhr.responseText);
-            drawShelves();
-        } else if (xhr.readyState == 4) {
-            alert("棚の位置の読み込みに失敗しました。");
-        }
-    };
-    xhr.send();
+    const savedPositions = localStorage.getItem('shelfPositions');
+    if (savedPositions) {
+        shelves = JSON.parse(savedPositions);
+    }
 }
 
-// 棚の位置を保存する関数
+// ローカルストレージに棚の位置を保存する関数
 function saveShelfPositions() {
-    const formData = new FormData();
-    shelves.forEach((shelf, index) => {
-        formData.append(`shelves[${index}][id]`, shelf.id);
-        formData.append(`shelves[${index}][x]`, shelf.x);
-        formData.append(`shelves[${index}][y]`, shelf.y);
-        formData.append(`shelves[${index}][width]`, shelf.width);
-        formData.append(`shelves[${index}][height]`, shelf.height);
-        formData.append(`shelves[${index}][selected]`, shelf.selected);
-    });
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_shelves.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            alert("棚の位置が保存されました！");
-        }
-    };
-    xhr.send(formData);
+    localStorage.setItem('shelfPositions', JSON.stringify(shelves));
+    alert("棚の位置が保存されました！");
 }
 
 // 棚位置をリセットする関数
 function resetShelfPositions() {
     shelves = [...initialShelves]; // 初期位置に戻す
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "reset_shelves.php", true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            drawShelves(); // 再描画
-            alert("棚の位置がリセットされました！");
-        } else if (xhr.readyState == 4) {
-            alert("棚の位置のリセットに失敗しました。");
-        }
-    };
-    xhr.send();
+    localStorage.removeItem('shelfPositions'); // ローカルストレージをリセット
+    drawShelves(); // 再描画
 }
 
 // ページが読み込まれたときに位置を復元
@@ -138,24 +125,3 @@ document.getElementById('saveButton').addEventListener('click', saveShelfPositio
 
 // リセットボタンのクリックイベント
 document.getElementById('resetButton').addEventListener('click', resetShelfPositions);
-
-// 新しいCanvas作成ボタンのクリックイベント
-document.getElementById('createCanvasButton').addEventListener('click', createNewCanvas);
-
-function createNewCanvas() {
-    // 新しいcanvas要素を作成
-    const newCanvas = document.createElement('canvas');
-    newCanvas.width = 800;
-    newCanvas.height = 600;
-    newCanvas.style.border = '1px solid black';
-
-    // 描画コンテキストを取得
-    const newCtx = newCanvas.getContext('2d');
-
-    // ここにcanvasの描画内容を追加（例：四角形を描く）
-    newCtx.fillStyle = 'lightblue';
-    newCtx.fillRect(10, 10, 100, 100);
-
-    // canvasをコンテナに追加
-    document.getElementById('canvasContainer').appendChild(newCanvas);
-}

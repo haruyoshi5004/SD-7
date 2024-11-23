@@ -2,18 +2,32 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Canvas作成</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>棚設定画面</title>
+    <link rel="stylesheet" href="tana.css">
     <style>
-        .canvas-container {
-            margin-top: 20px;
-        }
+        #mapCanvas { border: 1px solid #000; }
+        .shelf { width: 50px; height: 50px; background-color: #5f9; cursor: pointer; }
     </style>
 </head>
 <body>
-    <button id="createCanvasButton">新しいCanvasを作成</button>
-    <button id="saveButton">棚の位置を保存</button>
-    <button id="resetButton">棚の位置をリセット</button>
-    <div id="canvasContainer" class="canvas-container"></div>
+    <header class="header">
+        棚設定画面
+    </header>
+
+    <div class="login-container">
+        <h3>棚配置マップ(位置を保存を押して登録を押す)</h3>
+        <canvas id="mapCanvas" width="800" height="600"></canvas>
+
+        <!-- 位置保存ボタン -->
+        <button id="saveButton">位置を保存</button>
+
+        <!-- 位置リセットボタン -->
+        <button id="resetButton">位置をリセット</button>
+    
+
+        
+    </div>
 
     <!-- 戻るボタン -->
     <a href="../information/情報登録2.html"><button class="back-button" onclick="history.back()">戻る</button></a>
