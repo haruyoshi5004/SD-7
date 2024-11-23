@@ -11,11 +11,11 @@ if (isset($_POST["user"])) {
         $result = $st->fetch(PDO::FETCH_ASSOC);
         if ($result) {
             $adomin_id = $result["管理者ID"];
-            $sql = "DELETE FROM ユーザー管理 WHERE 名前 = :user";
+            $sql = "DELETE FROM ログイン管理 WHERE 名前 = :user";
             $st = $my->prepare($sql);
             $st->bindParam(':user', $username, PDO::PARAM_STR);
             $st->execute();
-            $sql = "DELETE FROM ログイン管理 WHERE 管理者ID = :admin_id";
+            $sql = "DELETE FROM ユーザー名 WHERE 管理者ID = :admin_id";
             $st = $my->prepare($sql);
             $st->bindParam(':admin_id', $adomin_id, PDO::PARAM_INT);
             $st->execute();
