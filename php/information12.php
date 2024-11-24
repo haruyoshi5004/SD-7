@@ -23,8 +23,9 @@ unset($_SESSION['error']);
     <div class="login-container">
         <?php if ($product): ?>
             <p>商品名: <?php echo htmlspecialchars($product['商品名']); ?></p>
+            <p>Janコード<?php echo htmlspecialchars($product['Janコード']);?></p>
             <p>価格: <?php echo htmlspecialchars($product['価格']); ?></p>
-            <p>説明: <?php echo htmlspecialchars($product['説明']); ?></p>
+            <p>商品説明: <?php echo htmlspecialchars($product['商品説明']); ?></p>
             <!-- 他のフィールドも追加 -->
         <?php elseif ($error): ?>
             <p><?php echo htmlspecialchars($error); ?></p>
