@@ -10,14 +10,13 @@
     <header class="header">
         削除情報検索
     </header>
-
-    <div class="login-container">
-        <label for="merchandise-search">商品検索</label>
-        <input type="text" id="merchandise-search" class="input-field">
-        <a href="情報登録12.html"><button class="search-button2">検索</button></a>
-
-    </div>
-
+    <form method = "POST" action ="../php/information11.php">
+        <div class="login-container">
+            <label for="merchandise-search">商品検索</label>
+            <input type="text" name = "syo" id="merchandise-search" class="input-field">
+            <button class="search-button2">検索</button>
+        </div>
+    </form>
     <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
