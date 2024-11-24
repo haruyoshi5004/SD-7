@@ -18,4 +18,6 @@ if (isset($_POST["syo"])) {
         $SESSION['商品がありません']=$e->getMessage();
     }
     header("Location: information12.php");
+    exit();
+}
 ?>
