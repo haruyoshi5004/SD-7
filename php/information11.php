@@ -15,7 +15,7 @@ if (isset($_POST["syo"])) {
         }else{
             echo json_encode(["商品がありません" => $e ->getMessage()]);
         }
-    }catch(PDPException $e){
+    }catch(PDOException $e){
         $SESSION['商品がありません']=$e->getMessage();
     }
     header("Location: information12.php");
