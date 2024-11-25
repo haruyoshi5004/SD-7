@@ -1,6 +1,6 @@
 <?php
 session_start();
-$dele_pro = $SESSION['dele_syo']??'不明な商品';
+$dele_syo = $SESSION['dele_syo']??'不明な商品';
 unset($_SESSION['dele_syo']);
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ unset($_SESSION['dele_syo']);
     <header class="header">
         情報削除
     </header>    
-    <p><?php echo $deleted_product; ?>の情報を削除しました</p>
+    <p><?php echo $dele_pro; ?>の情報を削除しました</p>
 
     <button class="logout-button" onclick="window.location.href='../top/top.html'">ログアウト</button>
 
