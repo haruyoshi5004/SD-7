@@ -22,21 +22,25 @@ unset($_SESSION['error']);
 
     <div class="login-container">
         <?php if ($product): ?>
-            <p>商品名: <?php echo htmlspecialchars($product['商品名']); ?></p>
-            <p>Janコード<?php echo htmlspecialchars($product['Janコード']);?></p>
-            <p>価格: <?php echo htmlspecialchars($product['価格']); ?></p>
-            <p>商品説明: <?php echo htmlspecialchars($product['商品説明']); ?></p>
+            <p>商品名: <?php echo htmlspecialchars($product['商品名'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <p>Janコード: <?php echo htmlspecialchars($product['Janコード'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <p>価格: <?php echo htmlspecialchars($product['価格'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <p>商品説明: <?php echo htmlspecialchars($product['商品説明'], ENT_QUOTES, 'UTF-8'); ?></p>
             <!-- 他のフィールドも追加 -->
         <?php elseif ($error): ?>
-            <p><?php echo htmlspecialchars($error); ?></p>
+            <p><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
         <?php else: ?>
             <p>商品情報がありません。</p>
         <?php endif; ?>
 
-        <label for="merchandise-search">商品</label>
-        <input type="text" id="merchandise-search" class="input-field">
-        <a href="情報登録12.html"><button class="search-button2">検索</button></a>
-        <a href="情報登録13.html"><button class="search-button2">削除</button></a>
+        <form action="情報登録12.html" method="post">
+            <label for="merchandise-search">商品</label>
+            <input type="text" id="merchandise-search" name="merchandise-search" class="input-field">
+            <button type="submit" class="search-button2">検索</button>
+        </form>
+        <form action="情報登録13.html" method="post">
+            <button type="submit" class="search-button2">削除</button>
+        </form>
     </div>
 
     <!-- 戻るボタン -->

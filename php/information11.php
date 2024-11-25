@@ -13,10 +13,10 @@ if (isset($_POST["syo"])) {
         if($result){
             echo json_encode($result);
         }else{
-            echo json_encode(["商品がありません" => $e ->getMessage()]);
+            echo json_encode(["商品がありません"]);
         }
     }catch(PDOException $e){
-        $SESSION['商品がありません']=$e->getMessage();
+        $_SESSION['商品がありません'] = $e->getMessage();
     }
     header("Location: information12.php");
     exit();
