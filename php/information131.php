@@ -1,6 +1,6 @@
 <?php
 session_start();
-$dele_syo = $SESSION['dele_syo']??'不明な商品';
+$dele_syo = $_SESSION['dele_syo']??'不明な商品';
 unset($_SESSION['dele_syo']);
 ?>
 <!DOCTYPE html>
@@ -15,12 +15,12 @@ unset($_SESSION['dele_syo']);
     <header class="header">
         情報削除
     </header>    
-    <p><?php echo $dele_pro; ?>の情報を削除しました</p>
+    <p><?php echo $dele_syo; ?>の情報を削除しました</p>
 
-    <button class="logout-button" onclick="window.location.href='../top/top.html'">ログアウト</button>
+    <button class="logout-button" onclick="window.location.href='../top/Top.html'">ログアウト</button>
 
     <!-- 戻るボタン -->
     
-    <a href="../top/TOP.html"><button class="back-button" onclick="history.back()">戻る</button></a>
+    <a href="../information/情報登録2.html"><button class="back-button" onclick="history.back()">戻る</button></a>
 </body>
 </html>

@@ -23,7 +23,7 @@ if (isset($_POST["id"],$_POST["syod"])) {
         $st->bindParam(':id', $id, PDO::PARAM_INT);
         $st->execute();
 
-        $SESSION['dele-syo'] = $syo;
+        $_SESSION['dele_syo'] = $syo;
         header("Location:information131.php");
     } catch (PDOException $e) {
         echo "エラー: " . $e->getMessage();
