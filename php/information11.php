@@ -11,9 +11,9 @@ if (isset($_POST["syo"])) {
         $st->execute();
         $result = $st->fetch(PDO::FETCH_ASSOC);
         if($result){
-            echo json_encode($result);
+            $_SESSION['product'] = $result;
         }else{
-            echo json_encode(["商品がありません"]);
+            $_SESSION['error'] = "商品が見つかりません";
         }
     }catch(PDOException $e){
         $_SESSION['商品がありません'] = $e->getMessage();
