@@ -17,6 +17,6 @@
         $cate = $_POST["cate"];
         $number = $_POST["number"];
         $post = $_POST["rule"];
-        $dsn="mysql:dbname=books;host=localhost";
+        $dsn="mysql:dbname=shinadasi;host=localhost";
         ?>
     </div>
