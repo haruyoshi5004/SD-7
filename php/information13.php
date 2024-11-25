@@ -24,7 +24,7 @@ if (isset($_POST["id"],$_POST["syod"])) {
         $st->execute();
 
         $SESSION['dele-syo'] = $syo
-        header("Location: ../information/情報登録13.html");
+        header("Location:情報登録131.php");
     } catch (PDOException $e) {
         echo "エラー: " . $e->getMessage();
     }
