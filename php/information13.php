@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST["id"],$_POST["syod"])) {
     try {
         $syo = $_POST["syod"];
@@ -22,6 +23,7 @@ if (isset($_POST["id"],$_POST["syod"])) {
         $st->bindParam(':id', $id, PDO::PARAM_INT);
         $st->execute();
 
+        $SESSION['dele-syo'] = $syo
         header("Location: ../information/情報登録13.html");
     } catch (PDOException $e) {
         echo "エラー: " . $e->getMessage();
