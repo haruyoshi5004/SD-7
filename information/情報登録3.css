@@ -85,3 +85,10 @@ label {
 button:hover {
     background-color: #6692a7; /* ボタンのホバー時の色変更 */
 }
+#shelfTable{
+    margin : 3em 0 1.5em ;
+    padding : 1em 1.5em ;
+    line-height : 1.8 ;
+    border : solid 2px #333 ;
+}
+table, th, td { border: 1px solid #ddd;}

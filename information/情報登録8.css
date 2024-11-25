@@ -125,3 +125,7 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
 }
+table{
+    border : solid 2px #333 ;
+    font-size:20px;
+}

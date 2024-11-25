@@ -15,11 +15,23 @@
 
     <canvas id="mapCanvas" width="800" height="600"></canvas>
 
+    <!-- フォームを追加 -->
+    <form id="shelfForm" action="情報登録8.html" method="GET" style="display: none;">
+        <input type="hidden" id="shelfIdInput" name="id">
+        <input type="hidden" id="syodInput" name="syod">
+    </form>
+
     <!-- 棚配置表示用のスクリプトを読み込む -->
     <script>
         // canvas要素と2D描画コンテキスト
         const canvas = document.getElementById('mapCanvas');
         const ctx = canvas.getContext('2d');
+
+        // クエリパラメータを取得する関数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
         // ローカルストレージから棚の位置を読み込む関数
         function loadShelfPositions() {
@@ -48,64 +60,21 @@
             );
             
             if (clickedShelf) {
-                // 棚ごとに異なるHTMLに移動させたい場合の処理
-                const shelfId = clickedShelf.id; // 棚にidがあると仮定
-                if (shelfId === 1) {
-                    window.location.href = '情報登録8.html'; // 棚1をクリックしたとき
-                } else if (shelfId === 2) {
-                    window.location.href = '情報登録8.html'; // 棚2をクリックしたとき
-                } else if (shelfId === 3) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                } else if (shelfId === 4) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }  else if (shelfId === 5) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 6) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 10) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 11) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 12) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 15) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 16) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 17) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 20) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 21) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 25) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 26) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 30) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 31) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 35) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 36) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }   else if (shelfId === 40) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
+                const shelfId = clickedShelf.id; // 棚のID
+                const shelfForm = document.getElementById('shelfForm');
+                const shelfIdInput = document.getElementById('shelfIdInput');
+                const syodInput = document.getElementById('syodInput');
 
-                }   else if (shelfId === 41) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
+                // IDをフォームに設定
+                shelfIdInput.value = shelfId;
 
-                }   else if (shelfId === 42) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
+                // URLのクエリパラメータからsyoを取得してフォームに設定
+                syodInput.value = getQueryParam('syo');
 
-                }   else if (shelfId === 43) {
-                    window.location.href = '情報登録8.html'; // 棚3をクリックしたとき
-                }
+                // フォームを送信
+                shelfForm.submit();
             }
         }
-
-
 
         // ページが読み込まれたら棚の位置を描画
         window.onload = function() {
