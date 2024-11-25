@@ -38,8 +38,37 @@
             <input name="rule" class="input-field">
             <input type ="submit" class="search-button" value="登録">
         </form>
+
+        <canvas id="mapCanvas" width="800" height="600"></canvas>
+<!--
+        <script>
+            const canvas = document.getElementById('mapCanvas');
+            const ctx = canvas.getContext('2d');
+    
+            function loadShelfPositions() {
+                const savedPositions = localStorage.getItem('shelfPositions');
+                if (savedPositions) {
+                    return JSON.parse(savedPositions);
+                }
+                return [];
+            }
+    
+            function drawShelves(shelves) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                shelves.forEach(shelf => {
+                    ctx.fillStyle = "#5f9";
+                    ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                    ctx.strokeRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                });
+            }
+            window.onload = function() {
+                const shelves = loadShelfPositions();
+                drawShelves(shelves);
+            }
+        </script>
+-->
     </div>
-    <!-- 戻るボタン -->
+
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
 </html>
