@@ -12,12 +12,12 @@
     </header>    
     <div class="login-container">
         <form method="post" action="itemregist.php">
-            <label for="standard">JANコード</label>
+            <label>JANコード</label>
             <input name="jan" class="input-field">
-            <label for="standard">商品名</label>
+            <label>商品名</label>
             <input name="sell" class="input-field">
-            <label for="location">カテゴリー</label>
-            <select class="input-field" name="category">
+            <label>カテゴリー</label>
+            <select class="input-field" name="cate">
                 <option disabled selected>選択してください</option>
                 <option>乳製品</option>
                 <option>肉類</option>
@@ -32,9 +32,9 @@
                 <option>飲料</option>
                 <option>酒類</option>
             </select>
-            <label for="location">場所</label>
-            <input type="nunmber" name="spot" class="input-field">
-            <label for="standard">補充基準</label>
+            <label>場所</label>
+            <input type="number" name="spot" class="input-field">
+            <label>補充基準</label>
             <input name="rule" class="input-field">
             <input type ="submit" class="search-button" value="登録">
         </form>
