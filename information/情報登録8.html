@@ -5,28 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>確認画面</title>
     <link rel="stylesheet" href="情報登録3.css">
-</head>
-<body>
-    <header class="header">
-        確認画面
-    </header>
+    <style>
+        table, th, td {
+            border: 2px solid #333;
+            font-size: 18px;
+        }
+        th, td {
+            padding: 12px;
+        }
 
-    <table id="shelfTable">
-            <tr>
-                <th>棚番号</th>
-                <th>商品名</th>
-            </tr>
-        </thead>
-    </table>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
 
-    <br>
+        .input-field {
+            width: 200px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
 
-    <form id="registerForm" method="post" action="information8.php">
-        <input type="hidden" name="syo" id="syoInput">
-        <input type="hidden" name="id" id="idInput">
-        <input type ="submit" value ="登録" class="registration-button">
-    </form>
+        .registration-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
+        .registration-button:hover {
+            background-color: #45a049;
+        }
+    </style>
     <script>
         // URLからクエリパラメータを取得する関数
         function getQueryParam(param) {
@@ -62,6 +75,33 @@
             document.getElementById('syoInput').value = name;
         };
     </script>
+</head>
+<body>
+    <header class="header">
+        確認画面
+    </header>
+
+    <table id="shelfTable">
+        <thead>
+            <tr>
+                <th>棚番号</th>
+                <th>商品名</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScriptでテーブル行を追加 -->
+        </tbody>
+    </table>
+
+    <form id="registerForm" method="post" action="information8.php">
+        <input type="hidden" name="syo" id="syoInput">
+        <input type="hidden" name="id" id="idInput">
+        <label for="ko">基準・個数</label>
+        <input type="text" name="ko" class="input-field">
+        <label for="time">基準・時間</label>
+        <input type="text" name="time" class="input-field">
+        <input type="submit" value="登録" class="registration-button">
+    </form>
 
     <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
