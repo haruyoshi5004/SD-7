@@ -10,3 +10,13 @@
     <header class="header">
         情報登録
     </header>
+    <div id="box">
+        <?php
+        $jan = $_POST["jan"];
+        $sell = $_POST["sell"];
+        $cate = $_POST["cate"];
+        $number = $_POST["number"];
+        $post = $_POST["rule"];
+        $dsn="mysql:dbname=books;host=localhost";
+        ?>
+    </div>
