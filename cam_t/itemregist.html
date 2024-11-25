@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スーパーの管理項目</title>
-    <link rel="stylesheet" href="情報登録8.css">
+    <link rel="stylesheet" href="../information/情報登録8.css">
 </head>
 <body>
     <header class="header">
@@ -19,22 +19,8 @@
             <!-- <label for="location">カテゴリー</label> -->
             <!-- <select id="standard" class="input-field"><option>乳製品</option><option>肉類</option><option>魚類</option></select> -->
             <label for="location">場所</label>
-            <select name="location" class="input-field" id="rack">
-                <script>
-                    var rack = ["1", "2", "3", "4", "5", "6"];
-                    var dropdown = document.getElementById("dropdown");
-                    rack.forEach(function(value) {
-                        var option = document.createElement("option");
-                        option.text = value;
-                        option.value = value;
-                        dropdown.add(option);
-                    });
-                    //const pulldown=getElementById("rack")
-                    //var rack =["1", "2", "3", "4", "5", "6"]
-                    //for (let i=0; i <= rack.length; i++)
-                        pulldown.insertAdjacentHTML('afterbegin', '<option>{$i}</option>');
-                </script>
-            </select>
+            <input name="spot" class="input-field">数値を入力
+            <input type ="submit" class="search-button" value="登録">
         </form>
     </div>
     <!-- 戻るボタン -->
