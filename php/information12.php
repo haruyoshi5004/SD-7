@@ -22,20 +22,25 @@ unset($_SESSION['error']);
 
     <div class="login-container">
         <?php if ($product): ?>
-            <p>商品名: <?php echo htmlspecialchars($product['商品名']); ?></p>
-            <p>価格: <?php echo htmlspecialchars($product['価格']); ?></p>
-            <p>説明: <?php echo htmlspecialchars($product['商品説明']); ?></p>
-            <!-- 他のフィールドも追加 -->
+            <p>商品名: <?php echo $product['商品名']; ?></p>
+            <p>メーカー: <?php echo $product['メーカー']; ?></p>
+            <p>JANコード:<?php echo $product['Janコード']; ?></p>
+            <p>価格: <?php echo $product['価格']; ?></p>
+            <p>説明: <?php echo $product['商品説明']; ?></p>
+            <form method ="post" action="information13.php">
+                <input type= "hidden" name ="id" value=<?php echo $product["商品ID"];?>>
+                <input type = "submit" value="削除" class="search-button2">
+            </form>
         <?php elseif ($error): ?>
             <p><?php echo htmlspecialchars($error); ?></p>
         <?php else: ?>
             <p>商品情報がありません。</p>
         <?php endif; ?>
-
-        <label for="merchandise-search">商品</label>
-        <input type="text" id="merchandise-search" class="input-field">
-        <a href="情報登録12.html"><button class="search-button2">検索</button></a>
-        <a href="情報登録13.html"><button class="search-button2">削除</button></a>
+        <form method = "post" action="information11.php">
+            <label for="syo-search">商品名検索</label>
+            <input type="text" id="syo-search" name="syo"class="input-field">
+            <input type = "submit" value="検索" class="search-button2">
+        </form>
     </div>
 
     <!-- 戻るボタン -->
