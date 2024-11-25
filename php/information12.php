@@ -29,6 +29,7 @@ unset($_SESSION['error']);
             <p>説明: <?php echo $product['商品説明']; ?></p>
             <form method ="post" action="information13.php">
                 <input type= "hidden" name ="id" value=<?php echo $product["商品ID"];?>>
+                <input type="hidden" name="syod" value= "<?php echo $product['商品名'] ?>">
                 <input type = "submit" value="削除" class="search-button2">
             </form>
         <?php elseif ($error): ?>

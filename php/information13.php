@@ -1,8 +1,9 @@
 <?php
-if (isset($_POST["id"])) {
+if (isset($_POST["id"],$_POST["syod"])) {
     try {
+        $syo = $_POST["syod"];
         $id = $_POST["id"];
-
+        
         $dsn = "mysql:dbname=shinadasi;host=localhost";
         $my = new PDO($dsn, "sina", "sina");
 
