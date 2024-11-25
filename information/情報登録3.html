@@ -12,24 +12,15 @@
     </header>
 
     <div class="login-container">
-        <!-- CSRF対策トークン追加 -->
         <form method="POST" action="../php/information3.php">
-            <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
-
             <label for="username">ユーザー名</label>
-            <input type="text" id="username" class="input-field" name="user" required>
-            
+            <input type="text" id="username" class="input-field" name="user">
             <label for="password">パスワード</label>
-            <input type="password" id="password" class="input-field" name="pass" required>
-
-            <!-- 送信ボタンをボタンタグに変更 -->
-            <button class="registration-button" type="submit">登録</button>
+            <input type="password" id="password" class="input-field" name="pass">
+            <input type = "submit" value = "登録" class="registration-button">
 
         </form>
     </div>
-            <!-- 登録で情報登録20になっている -->
-    <!-- 戻るボタン -->
     <button class="back-button" onclick="window.location.href='情報登録15.html'">戻る</button> 
-    <!-- 戻るを情報登録15に調整する -->
 </body>
 </html>
