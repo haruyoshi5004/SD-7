@@ -94,6 +94,7 @@ button:hover {
 table { width: 80%; 
     margin: 20px auto; 
     border-collapse: collapse; 
+    font-size:30px;
 } 
 table, th, td { border: 1px solid #ddd; } 
 th, td { padding: 12px; 
