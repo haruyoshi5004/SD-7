@@ -18,7 +18,7 @@
             //$dsn="mysql:dbname=DB名;host=ホスト名";←要変更
             $dsn="mysql:dbname=shinadasi;host=localhost";
             //$my = new PDO(接続情報,ユーザ名, パスワード);←要変更
-            $my = new PDO($dsn, "test", "testuser01");
+            $my = new PDO($dsn, "sina", "sina");
             $sql = "SELECT JANコード, 商品名, メーカー,価格, 商品説明 FROM 商品 WHERE 商品名 LIKE ".$search."";
             $res = $my->prepare($sql);
             $res->execute();
