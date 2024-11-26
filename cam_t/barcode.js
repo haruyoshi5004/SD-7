@@ -50,5 +50,6 @@ window.onload = function(){
 
 $("start").click() = function(){
     Quagga.start();
+    $("#res").val('');
 };
     
