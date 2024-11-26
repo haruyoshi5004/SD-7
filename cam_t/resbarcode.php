@@ -19,7 +19,7 @@
             $dsn="mysql:dbname=shinadasi;host=localhost";
             //$my = new PDO(接続情報,ユーザ名, パスワード);←要変更
             $my = new PDO($dsn, "sina", "sina");
-            $sql = "SELECT JANコード, 商品名, メーカー、価格, 商品説明 FROM 商品 WHERE JANコード=".$search."";
+            $sql = "SELECT JANコード, 商品名, メーカー,価格, 商品説明 FROM 商品 WHERE JANコード=".$search."";
             $res = $my->prepare($sql);
             $res->execute();
             $html = "<h3>検索結果</h3>";
