@@ -25,7 +25,7 @@
             $html = "<h3>検索結果</h3>";
             if ($res -> rowCount() > 0) {
                 while($row = $res->fetch(PDO::FETCH_ASSOC)){
-                    $html .= "<table border='1'><tr><th>JAN</th><th>商品名</th><th>メーカー</th><th>価格</th><th>商品説明</th></tr>";
+                    $html .= "<table border='1' rules='cols'><tr><th>JAN</th><th>商品名</th><th>メーカー</th><th>価格</th><th>商品説明</th></tr>";
                     $html .="<tr>";
                     foreach($row as $item) $html .= "<td>{$item}</td>";
                     $html .= "</tr>";
