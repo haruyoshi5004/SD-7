@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
-    <script src="./resbarcode.js"></script>
+    <script src="./barcode.js"></script>
 
 </head>
 
@@ -17,9 +17,10 @@
     <div id="box">
         <button id="start">起動・再読み取り</button>      
         <div id="quagga"></div>
-        <form metod="post" action = "resbarcode.php">
-            <input type="text" id="res"><br>
-            <input type="submit" value="検索" name="s" id="search">
+        <form method="post" action = "resbarcode.php">
+            *読取値*
+            <input type="text" name="s" id="res"><br>
+            <input type="submit" value="検索" id="search">
         </form>
 
     </div>

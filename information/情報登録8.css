@@ -113,3 +113,19 @@ button:hover {
 .logout-button:hover {
     background-color: #6692a7; /* ホバー時の色 */
 }
+.registration-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #b3e5fc; /* 水色 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+table{
+    border : solid 2px #333 ;
+    font-size:20px;
+}

@@ -15,28 +15,15 @@
         <h2>ログインページ</h2>
         <p>以下変更するユーザ名・パスワードを入力しログインしてください。</p>
         <p>パスワード忘れた場合は、管理者へ連絡してください</p>
-        <!-- フォーム送信方法をPOSTに設定 -->
-        <form method="POST" action="../php/information22.php">
-            <!-- ユーザー名の入力 -->
+        <form method="post" action="../php/information22.php">
             <label for="username">ユーザー名</label>
             <input name="user" type="text" id="username" class="input-field" required>
-
-            <!-- パスワードの入力 -->
             <label for="password">パスワード</label>
             <input name="pass" type="password" id="password" class="input-field" required>
 
             <input type="submit" value="ログイン">
         </form>
     </div>
-    <!-- ログインで情報登録18へ変更 リンクもつける -->
-
-    <!-- トップページに戻るボタン -->
     <button class="back-button" onclick="window.location.href='情報登録15.html'">戻る</button> 
-    
-    <!-- 情報登録15へ戻る -->
-    
-
-
-
 </body>
 </html>
