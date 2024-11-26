@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-11-25 22:55:31
+-- 生成日時: 2024-11-26 12:39:10
 -- サーバのバージョン： 10.4.32-MariaDB
 -- PHP のバージョン: 8.2.12
 
@@ -130,7 +130,9 @@ INSERT INTO `商品` (`商品ID`, `商品名`, `メーカー`, `Janコード`, `
 (12, 'aaa', 'morins', 1234567891011, 560, 'lllll'),
 (13, 'zzz', 'ccc', 4455475547364, 145, 'qqqqqqqqqqqqq'),
 (16, 'vvv', 'zzz', 1475869324152, 145, 'vvvvvvvvvvvvvvvvvv'),
-(17, 'xxx', 'zzz', 1475869324152, 145, 'vvvvvvvvvvvvvvvvvv');
+(17, 'xxx', 'zzz', 1475869324152, 145, 'vvvvvvvvvvvvvvvvvv'),
+(18, '高原', 'ぴっぴ', 123456789109, 190, 'うまいなあ'),
+(19, '高原晴義', 'ぴっぴ', 4575556475409, 190, 'うまいなあ');
 
 -- --------------------------------------------------------
 
@@ -159,7 +161,7 @@ INSERT INTO `商品カテゴリー` (`商品カテゴリーID`, `商品カテゴ
 CREATE TABLE `商品詳細` (
   `商品詳細ID` int(11) NOT NULL,
   `商品ID` int(11) NOT NULL,
-  `棚ID` int(11) NOT NULL,
+  `shelf_id` int(11) NOT NULL,
   `商品カテゴリーID` int(11) NOT NULL,
   `在庫数` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -172,11 +174,18 @@ CREATE TABLE `商品詳細` (
 
 CREATE TABLE `基準値` (
   `基準値ID` int(11) NOT NULL,
-  `棚ID` int(11) NOT NULL,
+  `shelf_id` int(11) NOT NULL,
   `商品ID` int(100) NOT NULL,
   `実績` text NOT NULL,
-  `時間` datetime NOT NULL
+  `時間` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `基準値`
+--
+
+INSERT INTO `基準値` (`基準値ID`, `shelf_id`, `商品ID`, `実績`, `時間`) VALUES
+(1, 20, 19, '25', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -202,6 +211,13 @@ CREATE TABLE `棚` (
   `商品ID` int(11) NOT NULL,
   `棚番号` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `棚`
+--
+
+INSERT INTO `棚` (`棚ID`, `商品ID`, `棚番号`) VALUES
+(2, 19, 40);
 
 --
 -- ダンプしたテーブルのインデックス
@@ -247,18 +263,18 @@ ALTER TABLE `商品カテゴリー`
 --
 ALTER TABLE `商品詳細`
   ADD PRIMARY KEY (`商品詳細ID`),
-  ADD UNIQUE KEY `商品詳細_UNIQUE` (`商品ID`,`棚ID`,`商品カテゴリーID`),
+  ADD UNIQUE KEY `商品詳細_UNIQUE` (`商品ID`,`shelf_id`,`商品カテゴリーID`),
   ADD KEY `商品ID` (`商品ID`),
   ADD KEY `商品カテゴリーID` (`商品カテゴリーID`),
-  ADD KEY `棚ID` (`棚ID`);
+  ADD KEY `棚ID` (`shelf_id`);
 
 --
 -- テーブルのインデックス `基準値`
 --
 ALTER TABLE `基準値`
   ADD PRIMARY KEY (`基準値ID`),
-  ADD UNIQUE KEY `基準値_unique` (`商品ID`,`棚ID`),
-  ADD KEY `棚ID` (`棚ID`);
+  ADD UNIQUE KEY `基準値_unique` (`商品ID`,`shelf_id`),
+  ADD KEY `棚ID` (`shelf_id`);
 
 --
 -- テーブルのインデックス `履歴`
@@ -271,6 +287,7 @@ ALTER TABLE `履歴`
 --
 ALTER TABLE `棚`
   ADD PRIMARY KEY (`棚ID`),
+  ADD UNIQUE KEY `棚_UNIQUE` (`商品ID`,`棚番号`),
   ADD KEY `商品ID` (`商品ID`);
 
 --
@@ -299,7 +316,7 @@ ALTER TABLE `ログイン管理`
 -- テーブルの AUTO_INCREMENT `商品`
 --
 ALTER TABLE `商品`
-  MODIFY `商品ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `商品ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- テーブルの AUTO_INCREMENT `商品カテゴリー`
@@ -317,7 +334,7 @@ ALTER TABLE `商品詳細`
 -- テーブルの AUTO_INCREMENT `基準値`
 --
 ALTER TABLE `基準値`
-  MODIFY `基準値ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `基準値ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルの AUTO_INCREMENT `履歴`
@@ -329,7 +346,7 @@ ALTER TABLE `履歴`
 -- テーブルの AUTO_INCREMENT `棚`
 --
 ALTER TABLE `棚`
-  MODIFY `棚ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `棚ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- ダンプしたテーブルの制約
