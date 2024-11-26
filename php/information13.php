@@ -18,6 +18,11 @@ if (isset($_POST["id"],$_POST["syod"])) {
         $st->bindParam(':id', $id, PDO::PARAM_INT);
         $st->execute();
 
+        $sql = "DELETE FROM 棚 WHERE 商品ID = :id";
+        $st = $my->prepare($sql);
+        $st->bindParam(':id', $id, PDO::PARAM_INT);
+        $st->execute();
+
         $sql = "DELETE FROM 商品 WHERE 商品ID = :id";
         $st = $my->prepare($sql);
         $st->bindParam(':id', $id, PDO::PARAM_INT);
