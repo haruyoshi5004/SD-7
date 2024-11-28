@@ -77,6 +77,6 @@ button, #search{
     font-size: 16px;
 }
 
-#back-button, #search :hover{
+#back-button:hover{
     background-color: #1465bd;
 }
