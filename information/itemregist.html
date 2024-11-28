@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スーパーの管理項目</title>
+    <link rel="stylesheet" href="情報登録8.css">
+</head>
+<body>
+    <header class="header">
+        情報登録
+    </header>    
+    <div class="login-container">
+        <form method="post" action="itemregist.php">
+            <label>JANコード</label>
+            <input name="jan" class="input-field">
+            <label>商品名</label>
+            <input name="sell" class="input-field">
+            <label>カテゴリー</label>
+            <select class="input-field" name="cate">
+                <option disabled selected>選択してください</option>
+                <option>乳製品</option>
+                <option>肉類</option>
+                <option>魚類</option>
+                <option>野菜</option>
+                <option>果物</option>
+                <option>米類</option>
+                <option>粉類</option>
+                <option>菓子</option>
+                <option>冷凍食品</option>
+                <option>惣菜</option>
+                <option>飲料</option>
+                <option>酒類</option>
+            </select>
+            <label>場所</label>
+            <input type="number" name="spot" class="input-field">
+            <label>補充基準</label>
+            <input name="rule" class="input-field">
+            <input type ="submit" class="search-button" value="登録">
+        </form>
+
+        <canvas id="mapCanvas" width="800" height="600"></canvas>
+<!--
+        <script>
+            const canvas = document.getElementById('mapCanvas');
+            const ctx = canvas.getContext('2d');
+    
+            function loadShelfPositions() {
+                const savedPositions = localStorage.getItem('shelfPositions');
+                if (savedPositions) {
+                    return JSON.parse(savedPositions);
+                }
+                return [];
+            }
+    
+            function drawShelves(shelves) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                shelves.forEach(shelf => {
+                    ctx.fillStyle = "#5f9";
+                    ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                    ctx.strokeRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                });
+            }
+            window.onload = function() {
+                const shelves = loadShelfPositions();
+                drawShelves(shelves);
+            }
+        </script>
+-->
+    </div>
+
+    <button class="back-button" onclick="history.back()">戻る</button>
+</body>
+</html>

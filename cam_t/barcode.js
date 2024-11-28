@@ -48,14 +48,7 @@ window.onload = function(){
     })
 };
 
-
-    /*
-    $("#stop").click(()=>{
-        Quagga.stop();
-
-    });
-    */
 $("start").click() = function(){
     Quagga.start();
+    document.getElementById("res").reset();
 };
-    

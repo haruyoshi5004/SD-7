@@ -3,21 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メニュー</title>
-    <link rel="stylesheet" href="情報登録8.css">
+    <title>確認画面</title>
+    <link rel="stylesheet" href="情報登録3.css">
+    <style>
+        table, th, td {
+            border: 2px solid #333;
+            font-size: 18px;
+        }
+        th, td {
+            padding: 12px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-field {
+            width: 200px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .registration-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .registration-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        // URLからクエリパラメータを取得する関数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // テーブルに棚データを表示する関数
+        function populateTable(id, name) {
+            const tableBody = document.getElementById('shelfTable').getElementsByTagName('tbody')[0];
+            const row = document.createElement('tr');
+            const cellId = document.createElement('td');
+            const cellName = document.createElement('td');
+
+            cellId.textContent = id;
+            cellName.textContent = name;
+
+            row.appendChild(cellId);
+            row.appendChild(cellName);
+            tableBody.appendChild(row);
+        }
+
+        // ページが読み込まれたらクエリパラメータをテーブルに表示し、フォームに値を設定
+        window.onload = function() {
+            const id = getQueryParam('id');
+            const name = getQueryParam('syod');
+
+            // 棚のIDと商品名をテーブルに表示
+            populateTable(id, name);
+
+            // フォームの隠し入力フィールドに値を設定
+            document.getElementById('idInput').value = id;
+            document.getElementById('syoInput').value = name;
+        };
+    </script>
 </head>
 <body>
     <header class="header">
-        メニュー
+        確認画面
     </header>
-    <div class="login-container">
-        <label for="categories-search">カテゴリー</label>
-        <button id="categories-button" class="input-field">▼</button>
-    </div>
-    
-    <!-- リンクでボタンを作成して指定ページに飛ぶ -->
-    <a href="情報登録7.html">
-        <button class="search-button">登録</button>
-    </a>
+
+    <table id="shelfTable">
+        <thead>
+            <tr>
+                <th>棚番号</th>
+                <th>商品名</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScriptでテーブル行を追加 -->
+        </tbody>
+    </table>
+
+    <form id="registerForm" method="post" action="../php/information8.php">
+        <input type="hidden" name="syo" id="syoInput">
+        <input type="hidden" name="id" id="idInput">
+        <label for="ko">基準・個数</label>
+        <input type="number" name="ko" class="input-field">
+        <label for="time">基準・時間</label>
+        <input type="time" name="time" class="input-field">
+        <input type="submit" value="登録" class="registration-button">
+    </form>
+
+    <!-- 戻るボタン -->
+    <button class="back-button" onclick="history.back()">戻る</button>
 </body>
 </html>

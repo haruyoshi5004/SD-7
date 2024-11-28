@@ -3,7 +3,7 @@ const canvas = document.getElementById('mapCanvas');
 const ctx = canvas.getContext('2d');
 
 // 棚オブジェクトのリスト（デフォルトの位置）
-let initialShelves = [
+const initialShelves = [
     { id: 1, x: 100, y: 100, width: 100, height: 50, selected: false },
     { id: 2, x: 200, y: 100, width: 100, height: 50, selected: false },
     { id: 3, x: 300, y: 100, width: 100, height: 50, selected: false },
@@ -34,8 +34,15 @@ let initialShelves = [
     { id: 41, x: 700, y: 250, width: 50, height: 100, selected: false },
     { id: 42, x: 700, y: 350, width: 50, height: 100, selected: false },
 ];
+
 // 現在の棚の位置（デフォルト位置から変更する可能性がある）
 let shelves = [...initialShelves];
+
+// URLパラメータから棚番号を取得する関数
+function getShelfNumber() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('shelf');
+}
 
 // ローカルストレージから棚の位置を読み込む関数
 function loadShelfPositions() {
@@ -43,6 +50,16 @@ function loadShelfPositions() {
     if (savedPositions) {
         shelves = JSON.parse(savedPositions);
     }
+    const highlightedShelf = getShelfNumber(); // URLパラメータから棚番号を取得
+    if (highlightedShelf) {
+        // 棚番号が一致するものを選択状態にする
+        shelves.forEach(shelf => {
+            if (shelf.id == highlightedShelf) {
+                shelf.selected = true;
+            }
+        });
+    }
+    drawShelves();
 }
 
 // ローカルストレージに棚の位置を保存する関数
@@ -57,12 +74,6 @@ function resetShelfPositions() {
     localStorage.removeItem('shelfPositions'); // ローカルストレージをリセット
     drawShelves(); // 再描画
 }
-
-// ページが読み込まれたときに位置を復元
-window.onload = function() {
-    loadShelfPositions();
-    drawShelves();
-};
 
 // ドラッグ状態を追跡
 let draggedShelf = null;
@@ -119,6 +130,11 @@ canvas.addEventListener('mousemove', (e) => {
 canvas.addEventListener('mouseup', () => {
     draggedShelf = null;
 });
+
+// ページが読み込まれたときに位置を復元
+window.onload = function() {
+    loadShelfPositions();
+};
 
 // 位置保存ボタンのクリックイベント
 document.getElementById('saveButton').addEventListener('click', saveShelfPositions);

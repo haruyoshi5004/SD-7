@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スーパーの管理項目</title>
-    <link rel="stylesheet" href="情報登録8.css">
+    <link rel="stylesheet" href="情報登録3.css">
 </head>
 <body>
     <header class="header">
         情報登録
     </header>    
     <div class="login-container">
-        <label for="standard">商品名</label>
-        <input type="text" id="standard" class="input-field">
-        <label for="standard">補充基準</label>
-        <input type="text" id="standard" class="input-field">
-        <!-- <label for="location">カテゴリー</label> -->
-        <!-- <select id="standard" class="input-field"><option>乳製品</option><option>肉類</option><option>魚類</option></select> -->
-        <label for="location">場所</label>
-        <a href="情報登録6.html"><button id="choose-button" class="choose-button">選ぶ</button></a>
-    </div>
-    <!-- 戻るボタン -->
+        <form method="POST" action="../php/information5.php">
+            <label for ="syo">商品名</label>
+            <input type="text" name="syo" id="syo" class = "input-field">
+
+            <label for="maker">メーカー</label>
+            <input type="text" id="maker" class="input-field" name="maker">
+            
+            <label for="price">価格</label>
+            <input type="number" id="price" class="input-field" name="price">
+
+            <label for="jan">JANコード</label>
+            <input type="number" id="jan" class="input-field" name="jan">
+            
+            <label for="information">商品説明</label>
+            <input type="text" id="information" class="input-field" name="info">
+            <input type ="submit" value ="登録" class="registration-button">
+        </form>
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
 </html>

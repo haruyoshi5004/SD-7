@@ -10,32 +10,52 @@
     <header class="header">
         品出し
     </header>
-        <!-- 棚リスト -->
-        <div class="syouhin">
-            <table>
-                <tr>
-                    <td>棚1</td>
-                    <td><a href="品出し2.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>棚2</td>
-                    <td><a href="品出し2.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>棚3</td>
-                    <td><a href="品出し2.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>棚4</td>
-                    <td><a href="品出し2.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>棚5789</td>
-                    <td><a href="品出し2.html" class="detail-link">詳細</a></td>
-                </tr>
-            </table>
-        </div>
-    
+    <!-- 棚リスト -->
+    <div class="syouhin">
+        <table>
+            <tr>
+                <td>
+                    <form method="POST" action=".php">
+                        <input type="hidden" name="shelf" value="棚1">
+                        <button type="submit" class="detail-link">棚1 詳細</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST" action=".php">
+                        <input type="hidden" name="shelf" value="棚2">
+                        <button type="submit" class="detail-link">棚2 詳細</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST" action=".php">
+                        <input type="hidden" name="shelf" value="棚3">
+                        <button type="submit" class="detail-link">棚3 詳細</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST" action=".php">
+                        <input type="hidden" name="shelf" value="棚4">
+                        <button type="submit" class="detail-link">棚4 詳細</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST" action=".php">
+                        <input type="hidden" name="shelf" value="棚5">
+                        <button type="submit" class="detail-link">棚5 詳細</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
