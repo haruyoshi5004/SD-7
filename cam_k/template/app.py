@@ -4,7 +4,7 @@ import time
 import threading
 
 
-app = Flask(__name__, template_folder=r'C:\template\my_templates', static_folder=r'C:\template\static')
+app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k', static_folder=r'C:\template\static')
 
 
 
