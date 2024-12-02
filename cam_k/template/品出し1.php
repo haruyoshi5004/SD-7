@@ -10,14 +10,14 @@
         try{
             $my = new PDO($dsn, "sina", "sina");
             $my->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT 棚番号 FROM 棚";
+            $sql = "SELECT 棚番号 FROM 棚 ORDER BY 棚番号 ASC";
             $st = $my->prepare($sql);
             $st->execute();
-            $result = $st->fetch(PDO::FETCH_ASSOC);
+            $result = $st->fetchAll(PDO::FETCH_ASSOC);
             echo "<table border =1>";
             foreach($result as $row){
                 echo "<tr><td>";
-                echo "棚".$row['棚番号'];
+                echo "棚" . htmlspecialchars($row['棚番号']);
                 echo "</td>";
                 echo "<td>";
                 echo "<form action ='syoken.php' method ='post'>";
