@@ -66,13 +66,14 @@
         window.onload = function() {
             const id = getQueryParam('id');
             const name = getQueryParam('syod');
-
+            const cate = getQueryParam('cate');
             // 棚のIDと商品名をテーブルに表示
             populateTable(id, name);
 
             // フォームの隠し入力フィールドに値を設定
             document.getElementById('idInput').value = id;
             document.getElementById('syoInput').value = name;
+            document.getElementById('cateInput').value = cate;
         };
     </script>
 </head>
@@ -96,6 +97,7 @@
     <form id="registerForm" method="post" action="../php/information8.php">
         <input type="hidden" name="syo" id="syoInput">
         <input type="hidden" name="id" id="idInput">
+        <input type="hidden" name="cate" id="cateInput">
         <label for="ko">基準・個数</label>
         <input type="number" name="ko" class="input-field">
         <label for="time">基準・時間</label>

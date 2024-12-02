@@ -12,8 +12,13 @@
     </header>    
     <div class="login-container">
         <form method="POST" action="../php/information5.php">
-            <label for ="syo">商品名</label>
-            <input type="text" name="syo" id="syo" class = "input-field">
+            <label for="syo">商品名</label>
+            <input type="text" name="syo" id="syo" class="input-field">
+
+            <label for="category">商品カテゴリー登録</label>
+            <select id="category" name="category" class="input-field">
+                <option value="">選択してください</option>
+            </select>
 
             <label for="maker">メーカー</label>
             <input type="text" id="maker" class="input-field" name="maker">
@@ -22,12 +27,39 @@
             <input type="number" id="price" class="input-field" name="price">
 
             <label for="jan">JANコード</label>
-            <input type="number" id="jan" class="input-field" name="jan">
+            <input type="number" id="jan" class="input-field" name="Jan">
             
             <label for="information">商品説明</label>
             <input type="text" id="information" class="input-field" name="info">
-            <input type ="submit" value ="登録" class="registration-button">
+            <input type="submit" value="登録" class="registration-button">
         </form>
-    <button class="back-button" onclick="history.back()">戻る</button>
+        <button class="back-button" onclick="history.back()">戻る</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const categorySelect = document.getElementById('category');
+            function fetchCategories() {
+                fetch('../php/information51.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('エラーが発生しました:', data.error);
+                        } else {
+                            data.forEach(category => {
+                                const option = document.createElement('option');
+                                option.value = category.商品カテゴリー名;
+                                option.textContent = category.商品カテゴリー名;
+                                categorySelect.appendChild(option);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('カテゴリーの取得に失敗しました:', error);
+                    });
+            }
+
+            fetchCategories(); // ページ読み込み時にカテゴリーを取得
+        });
+    </script>
 </body>
 </html>
