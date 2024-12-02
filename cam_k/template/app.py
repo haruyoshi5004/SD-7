@@ -126,14 +126,14 @@ def generate_frames():
 def video_feed():
     """ビデオストリームを返すエンドポイント"""
     if not is_camera_active:
-        return Response(status=403)  # カメラがアクティブでない場合はストリームを返さない
+        return Response(status=403)  #カメラがアクティブでない場合はストリームを返さない
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/camera_screen')
 def camera_screen():
     """カメラ画面を表示"""
-    initialize_camera()  # カメラを起動
+    initialize_camera()  #カメラを起動
     return render_template('カメラ画面.html')
 
 
@@ -146,8 +146,8 @@ def get_count():
 @app.route('/')
 def home():
     """ホーム画面を表示"""
-    release_camera()  # ホームに移動時にカメラを停止
-    return render_template('ホーム.html')  # 別のページを表示
+    release_camera()  #ホームに移動時にカメラを停止
+    return render_template('ホーム.html')  #別のページを表示
 
 
 if __name__ == '__main__':
