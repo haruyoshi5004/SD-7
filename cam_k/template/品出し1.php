@@ -31,5 +31,6 @@
             echo "エラー: " . htmlspecialchars($e->getMessage());
         }
         ?>
+        <button class="back-button" onclick="window.location.href='../top/TOP.html'">戻る</button>
         </body>
     </html>
