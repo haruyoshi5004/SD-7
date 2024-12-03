@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>品出し - ヘッダー</title>
+    <link rel="stylesheet" href="品出しのcss.css">
+</head>
+<body>
+    <header class="header">
+        品出し
+    </header>
+
+    <h3>棚配置マップ</h3>
+    <canvas id="mapCanvas" width="800" height="600"></canvas>
+
+    <div class="button-container">
+        <button class="back-button" onclick="history.back()">戻る</button>
+        <button class="registration-button" onclick="location.href='../cam_k/template/my_templates/カメラ画面.html' + window.location.search;">詳細</button>
+    </div>
+    <script src="tana.js"></script>
+</body>
+</html>

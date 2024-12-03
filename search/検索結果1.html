@@ -3,41 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>検索-商品検索結果</title>
-    <link rel="stylesheet" href="../Stocking/品出しのcss.css">
+    <title>検索結果</title>
+    <link rel="stylesheet" href="検索結果.css">
+    <script>
+        // URLパラメータを取得する関数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // ページロード時にデータを表示する関数
+        window.onload = function() {
+            const syo = getQueryParam('syo');
+            if (syo) {
+                const products = JSON.parse(decodeURIComponent(syo));
+                const resultContainer = document.getElementById('result-container');
+                
+                // テーブルを作成
+                const table = document.createElement('table');
+                table.border = '1';
+                
+                // テーブルヘッダーを作成
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                const headerCell1 = document.createElement('th');
+                headerCell1.textContent = '商品名';
+                const headerCell2 = document.createElement('th');
+                headerCell2.textContent = '詳細';
+                headerRow.appendChild(headerCell1);
+                headerRow.appendChild(headerCell2);
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // テーブルボディを作成
+                const tbody = document.createElement('tbody');
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    const cell1 = document.createElement('td');
+                    cell1.textContent = product;
+                    const cell2 = document.createElement('td');
+                    const detailButton = document.createElement('button');
+                    detailButton.textContent = '詳細';
+                    detailButton.onclick = function() {
+                        window.location.href = `ken1.php?syo=${encodeURIComponent(product)}`;
+                    };
+                    cell2.appendChild(detailButton);
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                
+                // テーブルを結果コンテナに追加
+                resultContainer.appendChild(table);
+            }
+        };
+    </script>
 </head>
 <body>
     <header class="header">
-        商品検索結果
+        検索結果
     </header>
 
-    <div class="container">
-        <!-- 棚リスト -->
-        <div class="shelf-list">
-            <table>
-                <tr>
-                    <td>牛乳</td>
-                    <td><a href="detail1.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>おいしい牛乳</td>
-                    <td><a href="detail2.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>コーヒー牛乳</td>
-                    <td><a href="detail3.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>フルーツ牛乳</td>
-                    <td><a href="detail4.html" class="detail-link">詳細</a></td>
-                </tr>
-                <tr>
-                    <td>極上の牛ニュ</td>
-                    <td><a href="detail5.html" class="detail-link">詳細</a></td>
-                </tr>
-            </table>
-        </div>
-    
+    <div class="container" id="result-container">
+        <!-- 検索結果がここに表示されます -->
+    </div>
+
     <!-- 戻るボタン -->
     <button class="back-button" onclick="history.back()">戻る</button>
 </body>
