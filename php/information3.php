@@ -18,7 +18,10 @@ if (isset($_POST["user"], $_POST["pass"])) {
             echo "挿入に失敗しました！";
         }
     } catch (PDOException $e) {
-        echo "接続または操作に失敗しました: " . $e->getMessage();
+        echo "<script type='text/javascript'>
+            alert('入力されたユーザー名は既に存在します。');
+            window.location.href = '../information/情報登録3.html';
+        </script>";
     }
 }
 ?>

@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>情報登録-ログイン</title>
     <link rel="stylesheet" href="情報登録.css">
+    <script>
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+    window.onload = function() {
+        const page = getQueryParam('page');
+        document.getElementById('pageInput').value = page;
+    }
+    </script>
+    
 </head>
 <body>
     <header class="header">
@@ -22,7 +33,7 @@
             <!-- パスワードの入力 -->
             <label for="password">パスワード</label>
             <input name="pass" type="password" id="password" class="input-field" required>
-
+            <input type="hidden" name="page" id="pageInput">
             <input type="submit" value="ログイン">
         </form>
     </div>

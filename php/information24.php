@@ -1,31 +1,49 @@
 <?php
-// ユーザー名とパスワードがPOSTされた場合
-if (isset($_POST["user"], $_POST["pass"])) {
-    $a = $_POST["user"];  // ユーザー名
-    $password = $_POST["pass"];  // パスワード
+if (isset($_POST["user"], $_POST["pass"],$_POST["page"])) {
+    $a = $_POST["user"]; 
+    $password = $_POST["pass"];
+    $page = $_POST["page"];
     $dsn = "mysql:dbname=shinadasi;host=localhost";
     $my = new PDO($dsn, "sina", "sina");
-
-    // SQL文（パスワードを取得）
     $sql = "SELECT パスワード FROM ログイン管理 WHERE ユーザー名 = :user";
-    // SQL準備
     $st = $my->prepare($sql);
     $st->bindParam(':user', $a, PDO::PARAM_STR);
     $st->execute();
-
-    // 結果を取得
     $result = $st->fetch(PDO::FETCH_ASSOC);
-
-    // パスワードが一致するか確認
     if ($result && password_verify($password, $result['パスワード'])) {
-        $sql = "SELECT "
-        header("Location: ../information/情報登録2.html");
-        exit();  // headerの後にexitを追加して、リダイレクト後のコードが実行されないようにする
+        $sql = "SELECT 管理者ID FROM ログイン管理 WHERE ユーザー名 = :user";
+        $st = $my->prepare($sql);
+        $st->bindParam(':user', $a, PDO::PARAM_STR);
+        $st->execute();
+        $result = $st->fetch(PDO::FETCH_ASSOC);
+        $b = $result["管理者ID"];
+        $sql = "SELECT 管理者権限 FROM ユーザー名 WHERE 管理者ID = :id";
+        $st = $my->prepare($sql);
+        $st->bindParam(':id', $b, PDO::PARAM_INT);
+        $st->execute();
+        $result = $st->fetch(PDO::FETCH_ASSOC);
+        $ken = $result["管理者権限"];
+        if($ken == "all" || $ken == "part"){
+            if($page==1){
+                header("Location: ../information/情報登録3.html");
+                exit();
+            }elseif($page==2){
+                header("Location: ../information/情報登録22.html");
+                exit();
+            }elseif($page==4){
+                header("Location: ../information/情報登録17.html");
+                exit();
+            }
+            
+        }else{
+            echo "<script type='text/javascript'> alert('権限が与えられていません'); window.location.href = '../information/情報登録24.html'; </script>";
+            exit();
+        }
+        exit();
     } else {
-        // ログイン失敗
         echo "<script type='text/javascript'>
             alert('ユーザー名またはパスワードが間違っています。');
-            window.location.href = '../information/情報登録1.html';
+            window.location.href = '../information/情報登録24.html';
         </script>";
         exit();
     }
