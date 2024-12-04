@@ -19,6 +19,7 @@
     <form id="shelfForm" action="情報登録8.html" method="GET" style="display: none;">
         <input type="hidden" id="shelfIdInput" name="id">
         <input type="hidden" id="syodInput" name="syod">
+        <input type="hidden" id="cateInput" name="cate">
     </form>
 
     <!-- 棚配置表示用のスクリプトを読み込む -->
@@ -64,13 +65,14 @@
                 const shelfForm = document.getElementById('shelfForm');
                 const shelfIdInput = document.getElementById('shelfIdInput');
                 const syodInput = document.getElementById('syodInput');
-
+                const cateInput = document.getElementById('cateInput');
                 // IDをフォームに設定
                 shelfIdInput.value = shelfId;
 
                 // URLのクエリパラメータからsyoを取得してフォームに設定
                 syodInput.value = getQueryParam('syo');
 
+                cateInput.value = getQueryParam('category');
                 // フォームを送信
                 shelfForm.submit();
             }
