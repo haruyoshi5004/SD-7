@@ -3,7 +3,7 @@ from flask import Flask, render_template, Response, jsonify
 import time
 import threading
 
-app = Flask(__name__, template_folder=r'C:\template\my_templates', static_folder=r'C:\template\static')
+app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\template\my_templates',static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\template\static')
 
 # 商品数を初期化（商品A～Iまでの数を設定）
 product_counts = [10] * 9 
