@@ -23,23 +23,27 @@ if (isset($_POST["user"], $_POST["pass"],$_POST["page"])) {
         $st->execute();
         $result = $st->fetch(PDO::FETCH_ASSOC);
         $ken = $result["管理者権限"];
-        if($ken == "all" || $ken == "part"){
-            if($page==1){
-                header("Location: ../information/情報登録3.html");
-                exit();
-            }elseif($page==2){
-                header("Location: ../information/情報登録22.html");
-                exit();
-            }elseif($page==4){
-                header("Location: ../information/情報登録17.html");
+        if(!$result){
+            echo "<script type='text/javascript'> alert('アカウント情報が入力されていません'); window.location.href = '../information/情報登録24.html'; </script>";
+            exit();
+        }else{
+            if($ken == "all" || $ken == "part"){
+                if($page==1){
+                    header("Location: ../information/情報登録3.html");
+                    exit();
+                }elseif($page==2){
+                    header("Location: ../information/情報登録22.html");
+                    exit();
+                }elseif($page==4){
+                    header("Location: ../information/情報登録17.html");
+                    exit(); 
+                }   
+            }else{
+                echo "<script type='text/javascript'> alert('権限が与えられていません'); window.location.href = '../information/情報登録24.html'; </script>";
                 exit();
             }
-            
-        }else{
-            echo "<script type='text/javascript'> alert('権限が与えられていません'); window.location.href = '../information/情報登録24.html'; </script>";
             exit();
         }
-        exit();
     } else {
         echo "<script type='text/javascript'>
             alert('ユーザー名またはパスワードが間違っています。');
