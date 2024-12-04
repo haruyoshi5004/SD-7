@@ -37,7 +37,11 @@ if (isset($_POST["user"], $_POST["pass"],$_POST["page"])) {
                 }elseif($page==4){
                     header("Location: ../information/情報登録17.html");
                     exit(); 
-                }   
+                } elseif($page==5){
+                    header("Location: ../tana/tana.html");
+                }elseif($page==6){
+                    header("Location:../information/情報登録11.html");
+                }
             }else{
                 echo "<script type='text/javascript'> alert('権限が与えられていません'); window.location.href = '../information/情報登録24.html'; </script>";
                 exit();
