@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang = "ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品検索</title>
+    <link rel="stylesheet" type="text/css" href="regist.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1>商品検索</h1>
+    </header>
+        <div class="login-container">
+            <form method="post" action="resitem.php">
+                <label>商品名</label>
+                <input name="sell" class="input-field">
+                <label>カテゴリー</label>
+                <select class="input-field" name="cate">
+                    <option disabled selected>選択してください</option>
+                    <option>乳製品</option>
+                    <option>肉類</option>
+                    <option>魚類</option>
+                    <option>野菜</option>
+                    <option>果物</option>
+                    <option>米類</option>
+                    <option>粉類</option>
+                    <option>菓子</option>
+                    <option>冷凍食品</option>
+                    <option>惣菜</option>
+                    <option>飲料</option>
+                    <option>酒類</option>
+                </select>
+                <input type ="submit" class="search-button" value="登録">
+            </form>
+            <label>JANコード</label>
+            <button href="barcode.html" class="input-field">
+        </div>
+    <button id="back-button" onclick="history.back()">戻る</button>
+</body>
+</html>
