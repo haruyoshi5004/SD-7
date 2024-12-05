@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>商品検索</title>
-    <link rel="stylesheet" type="text/css" href="regist.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <header class="header">
+    <header>
         <h1>商品検索</h1>
     </header>
-        <div class="login-container">
+        <div id="box">
             <form method="post" action="resitem.php">
                 <label>商品名</label>
-                <input name="sell" class="input-field">
-                <label>カテゴリー</label>
+                <input class="input-field in" name="sell" >
+                <br>
+                <label>カテゴリ</label>
                 <select class="input-field" name="cate">
                     <option disabled selected>選択してください</option>
                     <option>乳製品</option>
@@ -30,10 +31,12 @@
                     <option>飲料</option>
                     <option>酒類</option>
                 </select>
-                <input type ="submit" class="search-button" value="登録">
+                <br>
+                <input type ="submit" id="sub" value="検索">
             </form>
-            <label>JANコード</label>
-            <button href="barcode.html" class="input-field">
+            <label>バーコードスキャン</label>
+            <br>
+            <a href="barcode.html" class="input-field in">カメラを起動</a>
         </div>
     <button id="back-button" onclick="history.back()">戻る</button>
 </body>

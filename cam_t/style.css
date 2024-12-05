@@ -17,12 +17,18 @@ h1{
     font-size: 24px;
 }
 
+a{
+    color: #000000;
+    text-decoration: none;
+}
+
 #box{
     width: 500px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    padding: 15px;
     border: 3px double #4169e1;
     border-radius: 7px 7px 7px 7px;
     background-color: #e6e6fa;
@@ -64,6 +70,23 @@ button, #search{
     border-radius: 5px;
 }
 
+#sub {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #b3e5fc;
+    color: #000000;
+    border: 2px solid #c6e0f7;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#sub :hover {
+    background-color: #6692a7;
+}
+
 #back-button{
     position: fixed;
     bottom: 20px;
@@ -79,4 +102,23 @@ button, #search{
 
 #back-button:hover{
     background-color: #1465bd;
+}
+
+.input-field {
+    display:block;
+    width: 450px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid #00274a;
+    border-radius: 5px;
+    background-color: #b3e5fc; /* ライトブルー */
+}
+
+.in{
+    padding-left: 0;
+    padding-right: 0;
 }
