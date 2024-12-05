@@ -5,24 +5,24 @@ import threading
 
 app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
 
-# 商品数を初期化（商品A～Iまでの数を設定）
+#商品数を初期化（商品A～Iまでの数を設定）
 product_counts = [10] * 9 
 
-# カメラデバイスの初期化
+#カメラデバイスの初期化
 camera = None
 is_camera_active = False
 lock = threading.Lock()
 
-# 手検出のクールダウン時間 (秒)
+#手検出のクールダウン時間 (秒)
 cooldown_time = 2
 last_detection_time = time.time()
 
-# フレーム生成スレッドの停止
+#フレーム生成スレッドの停止
 stop_thread = threading.Event()
 
-# 枠の設定
-frame_width, frame_height = 640, 480  # デフォルトのフレームサイズ
-rows, cols = 3, 3  # バウンディングボックスの行数と列数
+#枠の設定
+frame_width, frame_height = 640, 480  #デフォルトのフレームサイズ
+rows, cols = 3, 3  #バウンディングボックスの行数と列数
 box_width = frame_width // cols
 box_height = frame_height // rows
 
@@ -41,7 +41,6 @@ def initialize_camera():
             box_height = frame_height // rows
             stop_thread.clear()
 
-
 def release_camera():
     """カメラをリリースする"""
     global camera, is_camera_active
@@ -52,35 +51,35 @@ def release_camera():
             camera = None
             is_camera_active = False
 
-
-def detect_hand(frame, x1, y1, x2, y2):
-    """指定されたバウンディングボックス内で手を検出"""
-    # フレームをHSVに変換して肌色検出
+def detect_hand_area(frame, x1, y1, x2, y2):
+    """指定したバウンディングボックス内の肌色面積を計算"""
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # 日本人の肌色の範囲
-    lower_skin = (0, 30, 60)  # 肌色の下限 (H:0, S:30, V:60)
-    upper_skin = (25, 180, 255)  # 肌色の上限 (H:25, S:180, V:255)
+    # 肌色範囲を定義
+    lower_skin = (0, 30, 60)
+    upper_skin = (25, 180, 255)
 
-    # 肌色範囲のマスクを作成
-    mask = cv2.inRange(hsv, lower_skin, upper_skin)
+    # 指定した範囲をマスク
+    box_mask = hsv[y1:y2, x1:x2]
+    mask = cv2.inRange(box_mask, lower_skin, upper_skin)
 
-    # マスクをバウンディングボックスの領域に限定
-    box_mask = mask[y1:y2, x1:x2]
-
-    # 輪郭を検出
-    contours, _ = cv2.findContours(box_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    for contour in contours:
-        area = cv2.contourArea(contour)
-        if 1200 < area < 6000:  # 面積（手の大きさに近いもの）
-            return True  # 検出できた
-    return False  # 検出できなかった
+    # 肌色ピクセル数を返す
+    return cv2.countNonZero(mask)
 
 
 def generate_frames():
     """カメラフレームを生成するジェネレータ"""
     global product_counts, last_detection_time
+
+    # 各列の幅を設定 (非等間隔: 左が狭く右が広い)
+    column_widths = [int(frame_width * 0.2), int(frame_width * 0.3), int(frame_width * 0.5)]
+    column_positions = [0, column_widths[0], column_widths[0] + column_widths[1]]
+
+    # 各列の高さを設定
+    box_height_left = int(frame_height * 0.31)
+    box_height_right = int(frame_height * 0.35)
+    box_height_middle = frame_height - box_height_left - box_height_right
+
     while not stop_thread.is_set():
         with lock:
             if not camera or not camera.isOpened():
@@ -91,25 +90,68 @@ def generate_frames():
             else:
                 current_time = time.time()
 
+                largest_area = 0
+                largest_box_index = -1
+
                 # バウンディングボックスを生成して描画
                 for row in range(rows):
                     for col in range(cols):
-                        x1 = col * box_width
-                        y1 = row * box_height
-                        x2 = x1 + box_width
-                        y2 = y1 + box_height
-                        cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                        # 各列の高さを設定
+                        if col == 0:
+                            box_height = box_height_left
+                        elif col == 2:
+                            box_height = box_height_right
+                        else:
+                            box_height = box_height_middle
 
-                        # 各バウンディングボックスで手を検出
-                        if detect_hand(frame, x1, y1, x2, y2):
+                        x1 = column_positions[col]
+                        x2 = x1 + column_widths[col]
+                        y1 = row * box_height
+                        y2 = y1 + box_height
+
+                        # 肌色面積を計算
+                        area = detect_hand_area(frame, x1, y1, x2, y2)
+
+                        # 最大面積を記録
+                        if area > largest_area:
+                            largest_area = area
+                            largest_box_index = row * cols + col
+
+                # 各枠を描画（緑: 最大面積の枠、青: 他の枠）
+                for row in range(rows):
+                    for col in range(cols):
+                        if col == 0:
+                            box_height = box_height_left
+                        elif col == 2:
+                            box_height = box_height_right
+                        else:
+                            box_height = box_height_middle
+
+                        x1 = column_positions[col]
+                        x2 = x1 + column_widths[col]
+                        y1 = row * box_height
+                        y2 = y1 + box_height
+
+                        # 枠の描画色を設定
+                        box_index = row * cols + col
+                        if box_index == largest_box_index:
+                            color = (0, 255, 0)  # 緑
+                            # 最大枠の商品数を減らす
                             if current_time - last_detection_time > cooldown_time:
-                                if product_counts[row * cols + col] > 0:
-                                    product_counts[row * cols + col] -= 1
+                                if product_counts[largest_box_index] > 0:
+                                    product_counts[largest_box_index] -= 1
                                     last_detection_time = current_time
-                                    print(f"商品{row * cols + col + 1}数: {product_counts[row * cols + col]}")
+                                    print(f"商品{largest_box_index + 1}数: {product_counts[largest_box_index]}")
+                        else:
+                            color = (255, 0, 0)  # 青
+
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+
+                # フレームをエンコードして生成
                 ret, buffer = cv2.imencode('.jpg', frame)
                 frame = buffer.tobytes()
                 yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
 
 
 @app.route('/video_feed')

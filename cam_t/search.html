@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang = "ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品検索</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>商品検索</h1>
+    </header>
+        <div id="box">
+            <form method="post" action="resitem.php">
+                <label>商品名</label>
+                <input class="input-field in" name="sell" >
+                <br>
+                <label>カテゴリ</label>
+                <select class="input-field" name="cate">
+                    <option disabled selected>選択してください</option>
+                    <option>乳製品</option>
+                    <option>肉類</option>
+                    <option>魚類</option>
+                    <option>野菜</option>
+                    <option>果物</option>
+                    <option>米類</option>
+                    <option>粉類</option>
+                    <option>菓子</option>
+                    <option>冷凍食品</option>
+                    <option>惣菜</option>
+                    <option>飲料</option>
+                    <option>酒類</option>
+                </select>
+                <br>
+                <input type ="submit" id="sub" value="検索">
+            </form>
+            <label>バーコードスキャン</label>
+            <br>
+            <a href="barcode.html" class="input-field in">カメラを起動</a>
+        </div>
+    <button id="back-button" onclick="history.back()">戻る</button>
+</body>
+</html>
