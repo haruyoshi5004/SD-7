@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品出し-カメラ画面</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='情報登録3.css') }}">
+    <title>カメラ画面</title>
+    <script>
+        // 商品数を更新
+        function updateProductCount() {
+            fetch('/get_count')
+                .then(response => response.json())
+                .then(data => {
+                    // 商品数を個別に更新
+                    const counts = data.product_counts;
+                    for (let i = 0; i < counts.length; i++) {
+                        document.getElementById(`product-${i + 1}`).innerText = counts[i];
+                    }
+                })
+                .catch(error => console.error('エラー:', error));
+        }
+
+        // 1秒ごとに商品数を更新
+        setInterval(updateProductCount, 1000);
+    </script>
+
+    <link rel="stylesheet" href="情報登録3.css">
 </head>
 <body>
-    <header class="header">
-        <h3>カメラ映像</h3>
+    <h1>カメラ画面</h1>
+    <div>
         <img src="{{ url_for('video_feed') }}" alt="カメラ映像">
-        <h2>残り商品数: <span id="product-count">10</span></h2>
-    </header>
-    <!-- 戻るボタン -->
-    <div class="button-container">
-        <button class="back-button" onclick="history.back()">戻る</button>
-        <button class="registration-button" onclick="location.href='../品出し3.php' + window.location.search;">詳細</button>
+    </div>
+
+    <div id="product-counts">
+        <div>商品A: <span id="product-1">10</span> 個</div>
+        <div>商品B: <span id="product-2">10</span> 個</div>
+        <div>商品C: <span id="product-3">10</span> 個</div>
+        <div>商品D: <span id="product-4">10</span> 個</div>
+        <div>商品E: <span id="product-5">10</span> 個</div>
+        <div>商品F: <span id="product-6">10</span> 個</div>
+        <div>商品G: <span id="product-7">10</span> 個</div>
+        <div>商品H: <span id="product-8">10</span> 個</div>
+        <div>商品I: <span id="product-9">10</span> 個</div>
     </div>
 
 
-    <!-- 商品数更新用スクリプト -->
-    <script>
-        // 商品数を定期的に取得して更新
-        function updateProductCount() {
-            fetch('/get_count')  // サーバーから商品数を取得
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('product-count').innerText = data.product_count;
-                })
-                .catch(error => {
-                    console.error('商品数の取得エラー:', error);
-                });
-        }
-        
-
-        // 1秒ごとに商品数を更新
-        setInterval(updateProductCount, 1000);  
-    </script>
+    <a href="/static/品出し3.html">
+        <button class="registration-button">詳細</button>
 </body>
 </html>

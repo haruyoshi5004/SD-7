@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>品出し - ヘッダー</title>
+    <link rel="stylesheet" href="品出しのcss.css">
+</head>
+<body>
+    <header class="header">
+        品出し
+    </header>
+
+
+    <!-- 棚の配置を表示 -->
+    <h3>棚配置マップ</h3>
+    <canvas id="mapCanvas" width="800" height="600"></canvas>
+
+
+    <!-- 棚配置表示用のスクリプトを読み込む -->
+    <script>
+        // canvas要素と2D描画コンテキスト
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+
+
+        // ローカルストレージから棚の位置を読み込む関数
+        function loadShelfPositions() {
+            const savedPositions = localStorage.getItem('shelfPositions');
+            if (savedPositions) {
+                return JSON.parse(savedPositions); // 保存された棚の位置を返す
+            }
+            return [];
+        }
+
+
+        // 棚を描画する関数（操作不可）
+        function drawShelves(shelves) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            shelves.forEach(shelf => {
+                ctx.fillStyle = "#5f9"; // 棚の色（緑色）
+                ctx.fillRect(shelf.x, shelf.y, shelf.width, shelf.height);
+                ctx.strokeRect(shelf.x, shelf.y, shelf.width, shelf.height);
+            });
+        }
+
+
+        // ページが読み込まれたら棚の位置を描画
+        window.onload = function() {
+            const shelves = loadShelfPositions(); // 保存された棚の位置を取得
+            drawShelves(shelves);                 // 取得した棚の位置で描画
+        };
+    </script>
+
+
+    <!-- 戻るボタンと詳細ボタンを追加 -->
+    <div class="button-container">
+        <!-- 戻るボタン -->
+        <button class="back-button" onclick="history.back()">戻る</button>
+       
+        <a href="http://127.0.0.1:5000/camera_screen">
+            <button class="registration-button">詳細</button>
+        </a>
+    </div>
+</body>
+</html>
