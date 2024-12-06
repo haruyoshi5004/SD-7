@@ -57,20 +57,7 @@ table{
     position: absolute;
 }
 
-button, #search{
-    margin: 10px;
-    padding: 5px;
-    background-color: #b0c4de;
-    font-size: 12px;
-    border-radius: 5px;
-}
-
-#start, #search{
-    font-size: 12px;
-    border-radius: 5px;
-}
-
-#sub {
+.sub {
     position: fixed; 
     bottom: 20px; 
     right: 20px;
@@ -83,7 +70,7 @@ button, #search{
     font-size: 16px;
 }
 
-#sub :hover {
+.sub :hover {
     background-color: #6692a7;
 }
 
