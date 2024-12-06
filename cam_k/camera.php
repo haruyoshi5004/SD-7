@@ -32,8 +32,6 @@ try {
 
     // データをJSON形式にエンコード
     $data = [
-        'syo' => $syo,
-        'ziseki' => $ziseki,
         'count' => $count
     ];
     $json_data = json_encode($data);
