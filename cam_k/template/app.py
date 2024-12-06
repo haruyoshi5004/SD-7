@@ -2,6 +2,28 @@ import cv2
 from flask import Flask, render_template, Response, jsonify
 import time
 import threading
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/receive_data', methods=['POST'])
+def receive_data():
+    data = request.get_json()
+    if data:
+        syo = data.get('syo', [])
+        ziseki = data.get('ziseki', [])
+        count = data.get('count', 0)
+        # 受け取ったデータを処理
+        print(f"商品名: {syo}")
+        print(f"在庫数: {ziseki}")
+        print(f"商品数: {count}")
+        return jsonify({"status": "success"}), 200
+    else:
+        return jsonify({"status": "error", "message": "No data received"}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
 
 app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
 

@@ -9,7 +9,7 @@ unset($_SESSION['dele_syo']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>削除完了画面</title>
-    <link rel="stylesheet" href="../information/情報登録8.css">
+    <link rel="stylesheet" href="../information/情報登録.css">
 </head>
 <body>
     <header class="header">
