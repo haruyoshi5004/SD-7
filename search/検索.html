@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
+    <script src="./barcode.js"></script>
+</head>
 <body>
     <header>
         <h1>検索</h1>
     </header>
     <div id="box">
-        <a href="barcode.html" class="input-field in">カメラを起動</a>
+        <button id="start" class="camaction">カメラ起動・再読み取り</button>      
+        <div id="quagga"></div>
         <form method = "post" action = "ken.php">
             <label for="jan">JAN</label>
             <input type="text" name="s" class="input-field" id="res">
