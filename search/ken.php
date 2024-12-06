@@ -34,7 +34,7 @@ if (isset($_POST["s"], $_POST["syo"], $_POST["category"])) {
                 $products[] = $product["商品名"];
             }
             $products_encoded = urlencode(json_encode($products));
-            header("Location:検索結果2.html?syo=$products_encoded");
+            header("Location:検索結果1.html?syo=$products_encoded");
         } elseif ($syo == "" && $cate == "") {
             $sql = "SELECT 商品名 FROM 商品 WHERE Janコード = :jan";
             $st = $my->prepare($sql);
@@ -42,7 +42,7 @@ if (isset($_POST["s"], $_POST["syo"], $_POST["category"])) {
             $st->execute();
             $result = $st->fetch(PDO::FETCH_ASSOC);
             $product_encoded = urlencode($result["商品名"]);
-            header("Location:検索結果3.html?syo=$product_encoded");
+            header("Location:検索結果1.html?syo=$product_encoded");
         } elseif ($jan == "" && $cate == "") {
             $sql = "SELECT 商品名 FROM 商品 WHERE 商品名 LIKE :syo";
             $st = $my->prepare($sql);
