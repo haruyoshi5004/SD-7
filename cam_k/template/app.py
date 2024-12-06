@@ -31,7 +31,7 @@ def initialize_camera():
     global camera, is_camera_active, frame_width, frame_height, box_width, box_height
     with lock:
         if not is_camera_active:
-            camera = cv2.VideoCapture(0)
+            camera = cv2.VideoCapture(1)
             if not camera.isOpened():
                 raise RuntimeError("カメラを初期化できませんでした")
             is_camera_active = True
@@ -172,7 +172,7 @@ def get_count():
 def camera_screen():
     """カメラ画面を表示"""
     initialize_camera()  # カメラを起動
-    return render_template('カメラ画面.html')
+    return render_template('カメラ画面.php')
 
 
 @app.route('/')

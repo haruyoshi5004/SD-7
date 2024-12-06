@@ -43,9 +43,9 @@
         <div>商品H: <span id="product-8">10</span> 個</div>
         <div>商品I: <span id="product-9">10</span> 個</div>
     </div>
-
-
-    <a href="/static/品出し3.html">
+    <?php
+    $shelf = isset($_GET['shelf']) ? intval($_GET['shelf']) : null;
+    $a = '<a href="/static/品出し3.php?shelf=" $shelf'">";
         <button class="registration-button">詳細</button>
 </body>
 </html>
