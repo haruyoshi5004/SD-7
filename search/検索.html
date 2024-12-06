@@ -4,30 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索</title>
-    <link rel="stylesheet" href="検索.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
     <script src="./barcode.js"></script>
 </head>
 <body>
-    <header class="header">
-        検索
+    <header>
+        <h1>検索</h1>
     </header>
     <div id="box">
-        <button id="start">起動・再読み取り</button>      
+        <button id="start" class="camaction">カメラ起動・再読み取り</button>      
         <div id="quagga"></div>
-    <div class="login-container">
         <form method = "post" action = "ken.php">
-        <label for="jan">Janコード</label>
-        <input type="text" name="s" id="res"><br>
-        <label for="merchandise-search">商品名検索</label>
-        <input type="text" id="merchandise-search" name="syo" class="input-field">
-        <label for ="category">商品カテゴリー名</label>
-        <select id="category" name="category" class="input-field">
-            <option value="">選択してください</option>
-        </select>
-        <input type="submit" value =検索 class="search-button">
+            <label for="jan">JAN</label>
+            <input type="text" name="s" class="input-field" id="res">
+            <label for="merchandise-search">商品名</label>
+            <input type="text" id="merchandise-search" name="syo" class="input-field">
+            <label for ="category">カテゴリ</label>
+            <select id="category" name="category" class="input-field">
+                <option value="">選択してください</option>
+            </select>
+            <input type="submit" value="検索" class="sub">
         </form>
     </div>
 
