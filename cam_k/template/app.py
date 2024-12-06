@@ -5,24 +5,24 @@ import threading
 
 app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
 
-#商品数を初期化（商品A～Iまでの数を設定）
-product_counts = [10] * 9 
+# 商品数を初期化（商品A～Iまでの数を設定）
+product_counts = [10] * 9
 
-#カメラデバイスの初期化
+# カメラデバイスの初期化
 camera = None
 is_camera_active = False
 lock = threading.Lock()
 
-#手検出のクールダウン時間 (秒)
+# 手検出のクールダウン時間 (秒)
 cooldown_time = 2
 last_detection_time = time.time()
 
-#フレーム生成スレッドの停止
+# フレーム生成スレッドの停止
 stop_thread = threading.Event()
 
-#枠の設定
-frame_width, frame_height = 640, 480  #デフォルトのフレームサイズ
-rows, cols = 3, 3  #バウンディングボックスの行数と列数
+# 枠の設定
+frame_width, frame_height = 640, 480  # デフォルトのフレームサイズ
+rows, cols = 3, 3  # バウンディングボックスの行数と列数
 box_width = frame_width // cols
 box_height = frame_height // rows
 
@@ -31,7 +31,7 @@ def initialize_camera():
     global camera, is_camera_active, frame_width, frame_height, box_width, box_height
     with lock:
         if not is_camera_active:
-            camera = cv2.VideoCapture(1)
+            camera = cv2.VideoCapture(0)
             if not camera.isOpened():
                 raise RuntimeError("カメラを初期化できませんでした")
             is_camera_active = True
@@ -66,19 +66,9 @@ def detect_hand_area(frame, x1, y1, x2, y2):
     # 肌色ピクセル数を返す
     return cv2.countNonZero(mask)
 
-
 def generate_frames():
     """カメラフレームを生成するジェネレータ"""
     global product_counts, last_detection_time
-
-    # 各列の幅を設定 (非等間隔: 左が狭く右が広い)
-    column_widths = [int(frame_width * 0.2), int(frame_width * 0.3), int(frame_width * 0.5)]
-    column_positions = [0, column_widths[0], column_widths[0] + column_widths[1]]
-
-    # 各列の高さを設定
-    box_height_left = int(frame_height * 0.31)
-    box_height_right = int(frame_height * 0.35)
-    box_height_middle = frame_height - box_height_left - box_height_right
 
     while not stop_thread.is_set():
         with lock:
@@ -96,17 +86,9 @@ def generate_frames():
                 # バウンディングボックスを生成して描画
                 for row in range(rows):
                     for col in range(cols):
-                        # 各列の高さを設定
-                        if col == 0:
-                            box_height = box_height_left
-                        elif col == 2:
-                            box_height = box_height_right
-                        else:
-                            box_height = box_height_middle
-
-                        x1 = column_positions[col]
-                        x2 = x1 + column_widths[col]
+                        x1 = col * box_width
                         y1 = row * box_height
+                        x2 = x1 + box_width
                         y2 = y1 + box_height
 
                         # 肌色面積を計算
@@ -120,16 +102,9 @@ def generate_frames():
                 # 各枠を描画（緑: 最大面積の枠、青: 他の枠）
                 for row in range(rows):
                     for col in range(cols):
-                        if col == 0:
-                            box_height = box_height_left
-                        elif col == 2:
-                            box_height = box_height_right
-                        else:
-                            box_height = box_height_middle
-
-                        x1 = column_positions[col]
-                        x2 = x1 + column_widths[col]
+                        x1 = col * box_width
                         y1 = row * box_height
+                        x2 = x1 + box_width
                         y2 = y1 + box_height
 
                         # 枠の描画色を設定
@@ -152,8 +127,6 @@ def generate_frames():
                 frame = buffer.tobytes()
                 yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-
-
 @app.route('/video_feed')
 def video_feed():
     """ビデオストリームを返すエンドポイント"""
@@ -161,12 +134,10 @@ def video_feed():
         return Response(status=403)  # カメラがアクティブでない場合はストリームを返さない
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
 @app.route('/get_count')
 def get_count():
     """商品数を取得するエンドポイント"""
     return jsonify({"product_counts": product_counts})
-
 
 @app.route('/camera_screen')
 def camera_screen():
@@ -174,13 +145,11 @@ def camera_screen():
     initialize_camera()  # カメラを起動
     return render_template('カメラ画面.php')
 
-
 @app.route('/')
 def home():
     """ホーム画面を表示"""
     release_camera()  # ホームに移動時にカメラを停止
     return render_template('ホーム.html')  # 別のページを表示
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

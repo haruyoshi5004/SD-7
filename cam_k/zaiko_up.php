@@ -1,1 +1,2 @@
 <?php
+$syo = $_GET
