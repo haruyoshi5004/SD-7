@@ -4,7 +4,8 @@ import time
 import threading
 from flask import Flask, request, jsonify
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
+
 
 @app.route('/receive_data', methods=['POST'])
 def receive_data():
@@ -17,7 +18,6 @@ def receive_data():
     else:
         return jsonify({"status": "error", "message": "No data received"}), 400
 
-app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
 
 # 商品数を初期化（商品A～Iまでの数を設定）
 product_counts = [10] * 9 
