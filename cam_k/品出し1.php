@@ -3,7 +3,7 @@
     <head>
         <meta charset ="utf-8">
         <title>商品一覧</title>
-        <link rel="stylesheet" href="../../notice/通知.css">
+        <link rel="stylesheet" href="../information/style_info.css">
     </head>
     <body>
         <header class ="header">

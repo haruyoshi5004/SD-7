@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>商品一覧</title>
+    <link rel="stylesheet" type="text/css" href="../information/style_info.css">
 </head>
 <body>
-    <header>
-        <h1>商品情報</h1>
-    </header>
+    <header>商品情報</header>
     <?php
     $shelf = isset($_GET['shelf']) ? intval($_GET['shelf']) : null;
     $dsn = "mysql:dbname=shinadasi;host=localhost";
