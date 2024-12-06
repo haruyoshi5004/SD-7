@@ -27,7 +27,7 @@ $dsn = "mysql:dbname=shinadasi;host=localhost";
             $result = $st->fetchAll(PDO::FETCH_ASSOC);
         }
         $shelf_encoded = urlencode(json_encode($tana_ban));
-            header("Location:品出し2.html?shelf=$tana_ban");
+            header("Location:../Stocking/品出し2.html?shelf=$shelf_encode");
         echo "<table border=1>";
         echo "<tr><th>商品名</th></tr>";
     } catch (PDOException $e) {
