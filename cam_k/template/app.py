@@ -16,10 +16,6 @@ def receive_data():
         return jsonify({"status": "success"}), 200
     else:
         return jsonify({"status": "error", "message": "No data received"}), 400
-import cv2
-from flask import Flask, render_template, Response, jsonify
-import time
-import threading
 
 app = Flask(__name__, template_folder=r'C:\template\my_templates', static_folder=r'C:\template\static')
 
