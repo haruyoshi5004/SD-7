@@ -44,9 +44,10 @@ if (isset($_POST["s"], $_POST["syo"], $_POST["category"])) {
             $product_encoded = urlencode($result["商品名"]);
             header("Location:検索結果3.html?syo=$product_encoded");
         } elseif ($jan == "" && $cate == "") {
-            $sql = "SELECT 商品名 FROM 商品 WHERE 商品名 Like :syo";
+            $sql = "SELECT 商品名 FROM 商品 WHERE 商品名 LIKE :syo";
             $st = $my->prepare($sql);
-            $st->bindParam(':syo', $syo, PDO::PARAM_STR);
+            $syo_like = "%" . $syo . "%";
+            $st->bindParam(':syo', $syo_like, PDO::PARAM_STR);            
             $st->execute();
             $result = $st->fetchAll(PDO::FETCH_ASSOC);
             $products = [];
