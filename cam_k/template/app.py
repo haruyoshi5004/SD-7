@@ -31,7 +31,7 @@ def initialize_camera():
     global camera, is_camera_active, frame_width, frame_height, box_width, box_height
     with lock:
         if not is_camera_active:
-            camera = cv2.VideoCapture(1)
+            camera = cv2.VideoCapture(0)
             if not camera.isOpened():
                 raise RuntimeError("カメラを初期化できませんでした")
             is_camera_active = True
