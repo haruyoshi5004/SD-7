@@ -2,8 +2,31 @@ import cv2
 from flask import Flask, render_template, Response, jsonify, request
 import time
 import threading
+import subprocess
 
 app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
+
+@app.route('/run_php')
+def run_php():
+    try:
+        result = subprocess.run(['php', 'insert_camera_ids.php'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout
+        else:
+            return f"Error: {result.stderr}", 500
+    except Exception as e:
+        return str(e), 500
+
+# カメラの数を取得
+num_cameras = 2  # 例として2台のカメラを使用
+
+for i in range(num_cameras):
+    cap = cv2.VideoCapture(i)
+    if not cap.isOpened():
+        print(f"カメラ {i} が開けません")
+    else:
+        print(f"カメラ {i} が認識されました")
+    cap.release()
 
 # 商品数を初期化（カメラごとに異なる商品リストを設定）
 product_counts = {}
@@ -23,6 +46,8 @@ stop_thread = threading.Event()
 # 枠の設定
 frame_width, frame_height = 640, 480  # デフォルトのフレームサイズ
 rows, cols = 3, 3  # バウンディングボックスの行数と列数
+box_width = frame_width // cols
+box_height = frame_height // rows
 
 def initialize_camera(camera_id):
     """カメラを初期化してアクティブにする"""

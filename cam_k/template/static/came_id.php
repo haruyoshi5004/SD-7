@@ -1,26 +1,24 @@
-<?php 
-$shelf = isset($_GET['shelf']) ? intval($_GET['shelf']) : null;
+<?php
+$camera_ids =[];
+for(i = 0; i<=46; i++){
+  $camera_ids = i; 
+}
+
 $dsn = "mysql:dbname=shinadasi;host=localhost";
+
 try {
-    $count = 0;
     $my = new PDO($dsn, "sina", "sina");
     $my->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT カメラID FROM 棚 WHERE 棚番号 = :shelf";
-    $st = $my->prepare($sql);
-          $st->execute();
-          $result = $st->fetchAll(PDO::FETCH_ASSOC);
-          $link = $result["カメラID"];
-          $link_encode= urlencode("$link");
-          $url ="http://localhost:5000/camera_screen/$camera_id";
-          if($result){
-            header("Location:$url");
-            exit();
-          }else{
-            echo "カメラがありません。";
-          }
-        } catch(PDOException $e) { 
-            echo "エラー: ". $e->getMessage(); 
-        } 
-        ?>
-          
-          
+
+    foreach ($camera_ids as $camera_id) {
+        $sql = "INSERT INTO camera (カメラ番号) VALUES (:camera_id)";
+        $st = $my->prepare($sql);
+        $st->bindParam(':camera_id', $camera_id, PDO::PARAM_INT);
+        $st->execute();
+    }
+
+    echo "カメラIDが設定されました";
+} catch (PDOException $e) {
+    echo "エラー: " . $e->getMessage();
+}
+?>
