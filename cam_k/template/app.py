@@ -1,34 +1,39 @@
 import cv2
-from flask import Flask, render_template, Response, jsonify
+from flask import Flask, render_template, Response, jsonify, request
 import time
 import threading
-from flask import Flask, request, jsonify
+import subprocess
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\my_templates', static_folder=r'C:\xampp\htdocs\SD-7\cam_k\template\static')
 
-@app.route('/receive_data', methods=['POST'])
-def receive_data():
-    data = request.get_json()
-    if data:
-        count = data.get('count', 0)
-        # 受け取ったデータを処理
-        print(f"商品数: {count}")
-        return jsonify({"status": "success"}), 200
+@app.route('/run_php')
+def run_php():
+    try:
+        result = subprocess.run(['php', 'insert_camera_ids.php'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout
+        else:
+            return f"Error: {result.stderr}", 500
+    except Exception as e:
+        return str(e), 500
+
+# カメラの数を取得
+num_cameras = 2  # 例として2台のカメラを使用
+
+for i in range(num_cameras):
+    cap = cv2.VideoCapture(i)
+    if not cap.isOpened():
+        print(f"カメラ {i} が開けません")
     else:
-        return jsonify({"status": "error", "message": "No data received"}), 400
-import cv2
-from flask import Flask, render_template, Response, jsonify
-import time
-import threading
+        print(f"カメラ {i} が認識されました")
+    cap.release()
 
-app = Flask(__name__, template_folder=r'C:\template\my_templates', static_folder=r'C:\template\static')
-
-# 商品数を初期化（商品A～Iまでの数を設定）
-product_counts = [10] * 9 
+# 商品数を初期化（カメラごとに異なる商品リストを設定）
+product_counts = {}
 
 # カメラデバイスの初期化
-camera = None
-is_camera_active = False
+cameras = {}
+is_camera_active = {}
 lock = threading.Lock()
 
 # 手検出のクールダウン時間 (秒)
@@ -41,32 +46,32 @@ stop_thread = threading.Event()
 # 枠の設定
 frame_width, frame_height = 640, 480  # デフォルトのフレームサイズ
 rows, cols = 3, 3  # バウンディングボックスの行数と列数
+box_width = frame_width // cols
+box_height = frame_height // rows
 
-
-def initialize_camera():
+def initialize_camera(camera_id):
     """カメラを初期化してアクティブにする"""
-    global camera, is_camera_active, frame_width, frame_height
+    global cameras, is_camera_active, frame_width, frame_height
     with lock:
-        if not is_camera_active:
-            camera = cv2.VideoCapture(0)
-            if not camera.isOpened():
-                raise RuntimeError("カメラを初期化できませんでした")
-            is_camera_active = True
-            frame_width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
-            frame_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        if camera_id not in cameras:
+            cameras[camera_id] = cv2.VideoCapture(camera_id)
+            if not cameras[camera_id].isOpened():
+                raise RuntimeError(f"カメラ{camera_id}を初期化できませんでした")
+            is_camera_active[camera_id] = True
+            frame_width = int(cameras[camera_id].get(cv2.CAP_PROP_FRAME_WIDTH))
+            frame_height = int(cameras[camera_id].get(cv2.CAP_PROP_FRAME_HEIGHT))
             stop_thread.clear()
+            product_counts[camera_id] = [10] * 9  # 各カメラに対して商品数を初期化
 
-
-def release_camera():
+def release_camera(camera_id):
     """カメラをリリースする"""
-    global camera, is_camera_active
+    global cameras, is_camera_active
     with lock:
-        if camera and is_camera_active:
+        if camera_id in cameras and is_camera_active[camera_id]:
             stop_thread.set()
-            camera.release()
-            camera = None
-            is_camera_active = False
-
+            cameras[camera_id].release()
+            del cameras[camera_id]
+            is_camera_active[camera_id] = False
 
 def detect_hand_area(frame, x1, y1, x2, y2):
     """指定したバウンディングボックス内の肌色面積を計算"""
@@ -83,111 +88,94 @@ def detect_hand_area(frame, x1, y1, x2, y2):
     # 肌色ピクセル数を返す
     return cv2.countNonZero(mask)
 
-
-def generate_frames():
+def generate_frames(camera_id):
     """カメラフレームを生成するジェネレータ"""
     global product_counts, last_detection_time
 
-    # 各列の幅を設定
-    column_widths = [int(frame_width * 0.2), int(frame_width * 0.3), int(frame_width * 0.5)]
-    column_positions = [0, column_widths[0], column_widths[0] + column_widths[1]]
-
-    # 各列の高さを同じに設定（左、中央、右全て同じ高さ）
-    heights = [int(frame_height * 0.33)] * 3  # 左・中央・右を同じ高さに設定
-
     while not stop_thread.is_set():
         with lock:
-            if not camera or not camera.isOpened():
+            if camera_id not in cameras or not cameras[camera_id].isOpened():
                 break
-            success, frame = camera.read()
+            success, frame = cameras[camera_id].read()
             if not success:
                 break
+            else:
+                current_time = time.time()
 
-            current_time = time.time()
-            largest_area = 0
-            largest_box_index = -1
+                largest_area = 0
+                largest_box_index = -1
 
-            # バウンディングボックスを生成して描画
-            for row in range(rows):
-                for col in range(cols):
-                    # 各列ごとに高さを設定
-                    box_height = heights[col]  # すべての列に同じ高さを設定
+                # バウンディングボックスを生成して描画
+                for row in range(rows):
+                    for col in range(cols):
+                        x1 = col * box_width
+                        y1 = row * box_height
+                        x2 = x1 + box_width
+                        y2 = y1 + box_height
 
-                    x1 = column_positions[col]
-                    x2 = x1 + column_widths[col]
-                    y1 = row * box_height
-                    y2 = y1 + box_height
+                        # 肌色面積を計算
+                        area = detect_hand_area(frame, x1, y1, x2, y2)
 
-                    # 肌色面積を計算
-                    area = detect_hand_area(frame, x1, y1, x2, y2)
+                        # 最大面積を記録
+                        if area > largest_area:
+                            largest_area = area
+                            largest_box_index = row * cols + col
 
-                    # 最大面積を記録
-                    if area > largest_area:
-                        largest_area = area
-                        largest_box_index = row * cols + col
+                # 各枠を描画（緑: 最大面積の枠、青: 他の枠）
+                for row in range(rows):
+                    for col in range(cols):
+                        x1 = col * box_width
+                        y1 = row * box_height
+                        x2 = x1 + box_width
+                        y2 = y1 + box_height
 
-            # 各枠を描画（緑: 最大面積の枠、青: 他の枠）
-            for row in range(rows):
-                for col in range(cols):
-                    # 各列ごとに高さを設定
-                    box_height = heights[col]
+                        # 枠の描画色を設定
+                        box_index = row * cols + col
+                        if box_index == largest_box_index:
+                            color = (0, 255, 0)  # 緑
+                            # 最大枠の商品数を減らす
+                            if current_time - last_detection_time > cooldown_time:
+                                if product_counts[camera_id][largest_box_index] > 0:
+                                    product_counts[camera_id][largest_box_index] -= 1
+                                    last_detection_time = current_time
+                                    print(f"カメラ{camera_id} - 商品{largest_box_index + 1}数: {product_counts[camera_id][largest_box_index]}")
+                        else:
+                            color = (255, 0, 0)  # 青
 
-                    x1 = column_positions[col]
-                    x2 = x1 + column_widths[col]
-                    y1 = row * box_height
-                    y2 = y1 + box_height
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
 
-                    # 枠の描画色を設定
-                    box_index = row * cols + col
-                    if box_index == largest_box_index:
-                        color = (0, 255, 0)  # 緑
-                        # 最大枠の商品数を減らす
-                        if current_time - last_detection_time > cooldown_time:
-                            if product_counts[largest_box_index] > 0:
-                                product_counts[largest_box_index] -= 1
-                                last_detection_time = current_time
-                                print(f"商品{largest_box_index + 1}数: {product_counts[largest_box_index]}")
-                    else:
-                        color = (255, 0, 0)  # 青
+                # フレームをエンコードして生成
+                ret, buffer = cv2.imencode('.jpg', frame)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-                    # バウンディングボックスを描画
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-
-            # フレームをエンコードして生成
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-
-
-
-@app.route('/video_feed')
-def video_feed():
+@app.route('/video_feed/<int:camera_id>')
+def video_feed(camera_id):
     """ビデオストリームを返すエンドポイント"""
-    if not is_camera_active:
-        return Response(status=403)  # カメラがアクティブでない場合はストリームを返さない
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    if camera_id not in is_camera_active or not is_camera_active[camera_id]:
+        return Response(status=403)
+    return Response(generate_frames(camera_id), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
-@app.route('/get_count')
-def get_count():
+@app.route('/get_count/<int:camera_id>')
+def get_count(camera_id):
     """商品数を取得するエンドポイント"""
-    return jsonify({"product_counts": product_counts})
+    if camera_id in product_counts:
+        return jsonify({"product_counts": product_counts[camera_id]})
+    else:
+        return jsonify({"error": "カメラIDが無効です"}), 400
 
-
-@app.route('/camera_screen')
-def camera_screen():
+@app.route('/camera_screen/<int:camera_id>')
+def camera_screen(camera_id):
     """カメラ画面を表示"""
-    initialize_camera()  # カメラを起動
-    return render_template('カメラ画面.html')
-
+    initialize_camera(camera_id)  # カメラを起動
+    return render_template('カメラ画面.php')
 
 @app.route('/')
 def home():
     """ホーム画面を表示"""
-    release_camera()  # ホームに移動時にカメラを停止
+    for camera_id in list(cameras.keys()):
+        release_camera(camera_id)  # ホームに移動時に全てのカメラを停止
     return render_template('home.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
