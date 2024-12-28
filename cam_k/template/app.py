@@ -168,7 +168,7 @@ def get_count(camera_id):
 def camera_screen(camera_id):
     """カメラ画面を表示"""
     initialize_camera(camera_id)  # カメラを起動
-    return render_template('カメラ画面.php')
+    return render_template('カメラ画面.php', camera_id=camera_id)
 
 @app.route('/')
 def home():

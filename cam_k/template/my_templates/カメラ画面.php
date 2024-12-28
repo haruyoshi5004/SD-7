@@ -29,7 +29,7 @@
 <body>
     <h1>カメラ画面</h1>
     <div>
-        <img src="{{ url_for('video_feed') }}" alt="カメラ映像">
+        <img src="{{ url_for('video_feed', camera_id=camera_id) }}" alt="カメラ映像">
     </div>
 
     <div id="product-counts">
