@@ -45,7 +45,9 @@
     </div>
     <?php
     $shelf = isset($_GET['shelf']) ? intval($_GET['shelf']) : null;
-    $a = '<a href="/static/品出し3.php?shelf=" $shelf'">";
+    $a = '<a href="/static/品出し3.php?shelf=' . $shelf . '">';
+    echo $a;
+    ?>
         <button class="registration-button">詳細</button>
         
 </body>
