@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "ja">
+<head>
+    <meta charset="UTF-8">
+    <title>バーコードスキャン</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
+    <script src="./barcode.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <h1>バーコードスキャン</h1>
+    </header>
+    <div id="box">
+        <button class="input-field" id="start">起動・再読み取り</button>      
+        <div id="quagga"></div>
+        <form method="post" action = "resbarcode.php">
+            *読取値*
+            <input type="text" name="s" id="res"><br>
+            <input type="submit" value="検索" class="sub" id="search">
+        </form>
+
+    </div>
+    <button id="back-button" onclick="history.back()">戻る</button>
+</body>
+
+</html>
