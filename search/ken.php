@@ -36,7 +36,7 @@ if (isset($_POST["s"], $_POST["syo"], $_POST["category"])) {
             $products_encoded = urlencode(json_encode($products));
             header("Location:検索結果1.html?syo=$products_encoded");
         } elseif ($syo == "" && $cate == "") {
-            $sql = "SELECT 商品名 FROM 商品 WHERE Janコード = :jan";
+            $sql = "SELECT 商品名 FROM 商品 WHERE JAN = :jan";
             $st = $my->prepare($sql);
             $st->bindParam(':jan', $jan, PDO::PARAM_INT);
             $st->execute();
