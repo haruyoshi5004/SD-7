@@ -6,22 +6,22 @@
     <link rel="stylesheet" href="/static/情報登録3.css">
     <title>カメラ画面</title>
     <script>
-        // 商品数を更新
-        function updateProductCount() {
-            fetch('/get_count')
+    // 商品数を更新
+        function updateProductCount(camera_id) {
+            fetch(`/get_count/${camera_id}`)
                 .then(response => response.json())
                 .then(data => {
                     // 商品数を個別に更新
                     const counts = data.product_counts;
                     for (let i = 0; i < counts.length; i++) {
-                        document.getElementById(`product-${i + 1}`).innerText = counts[i];
+                    document.getElementById(`product-${i + 1}`).innerText = counts[i];
                     }
                 })
                 .catch(error => console.error('エラー:', error));
         }
 
         // 1秒ごとに商品数を更新
-        setInterval(updateProductCount, 1000);
+        setInterval(() => updateProductCount({{ camera_id }}), 1000);
     </script>
 
     
@@ -31,7 +31,6 @@
     <div>
         <img src="{{ url_for('video_feed', camera_id=camera_id) }}" alt="カメラ映像">
     </div>
-
     <div id="product-counts">
         <div>商品A: <span id="product-1">10</span> 個</div>
         <div>商品B: <span id="product-2">10</span> 個</div>
@@ -48,7 +47,7 @@
     $a = '<a href="/static/品出し3.php?shelf=' . $shelf . '">';
     echo $a;
     ?>
-        <button class="registration-button">詳細</button>
-        
+    <button class="registration-button">詳細</button>
 </body>
+
 </html>
